@@ -7,8 +7,8 @@ import { faB, faBowlFood, faLightbulb, faShop } from '@fortawesome/free-solid-sv
 import placeholderImg from '../../static/images/chef-bryan-entertainment.jpg'
 import '../scss/react.scss'
 
-// import hardcoded event data
-import eventData from '../eventdata'
+// import Event
+import Event from '../Event'
 
 
 const EventContainer = () => {
@@ -20,8 +20,13 @@ const EventContainer = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
-        const fetchEvents = () => {
-            setEvents(eventData)
+        const fetchEvents = async () => {
+            try {
+                const eventsData = await Event.getEvents()
+                setEvents(eventsData)
+            } catch (err) {
+                console.error('Failed to fetch events:', err)
+            }
         }
         fetchEvents()
     }, [])

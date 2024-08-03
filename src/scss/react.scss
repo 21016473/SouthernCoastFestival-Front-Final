@@ -430,6 +430,61 @@
     font-weight: bold !important;
 }
 
+// NEW EVENT FORM -------------------------------------------------
+.new-event-form {
+    .form-text {
+        margin: 0.25em 0;
+    }
+    .form-section {
+        background-color: #bdbdbd;
+        padding: 1em;
+    }
+
+    .MuiFormLabel-root.MuiInputLabel-root {
+        font-family: var(--base-font-family) !important;
+        font-size: 0.75em !important;
+    }
+    // text-field label colour
+    .MuiInputBase-root, label {
+        color: #000000;
+        font-size: 0.75em;
+    }
+    // text-field outline not focused
+    .MuiOutlinedInput.root .MuiOutlinedInput-notchedOutline {
+        border: 1px solid #000000;
+    }
+    // text-field outline when focused
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border: 0.2em solid #FFC600;
+    }
+    // text-field label shrink colour
+    .MuiInputLabel-shrink {
+        color: #FFC600;
+    }
+
+    // tags section
+    #tag-section {
+        .form-sub {
+            font-size: 1em;
+        }
+        .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label {
+            font-size: 1em;
+        }
+        .form-checkbox {
+            .MuiCheckbox-root {
+                color: #505050;
+            }
+            .MuiCheckbox-root.Mui-checked  {
+                color: #FFC600;
+            }
+            .MuiButtonBase-root.MuiCheckbox-root {
+                padding: 0.3em;
+                margin-left: 0.3em;
+            }
+        }
+    }
+}
+
 // RESPONSIVE - TABLET ---------------------------------
 @media all and (max-width: 768px) {
     .event-card {

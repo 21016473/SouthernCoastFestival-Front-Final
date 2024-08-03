@@ -8,11 +8,28 @@ class Event {
         this.currentUser = {}
     }
 
+    async newEvent(formData) {
+        const response = await fetch(`${App.apiBase}/events`, {
+            method: 'POST',
+            headers: { "Authorization": `Bearer ${localStorage.accessToken}`},
+            body: formData
+        })
+
+        // if response not ok
+        if(!response.ok) {
+            // console log error
+            const err = await response.json()
+            if(err) console.log(err)
+            // run fail() function if set
+            if(typeof fail == 'function') fail()
+        } else {
+        }
+    }
+
     async getEvents() {
         // fetch json data
-        const response = await fetch(`${App.apiBase}/events/events`, {
-            method: 'GET',
-            headers: { "Authorization": `Bearer ${localStorage.accessToken}`}
+        const response = await fetch(`${App.apiBase}/events`, {
+            method: 'GET'
         })
 
         // if response not ok

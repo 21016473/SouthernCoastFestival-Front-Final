@@ -1,8 +1,7 @@
 import App from '../../App'
-import {html, render } from 'lit-html'
+import { html, render } from 'lit-html'
 import Utils from '../../Utils'
 import Auth from '../../Auth.js'
-
 import { renderReactComponent } from '../../components/react/reactHelper'
 import EventContainer from '../../components/sc-events-grid.js'
 import ContactForm from '../../components/react/sc-contact-form.js'
@@ -11,9 +10,10 @@ import AdminNav from '../../components/sc-admin-nav.js'
 
 class HomeView {
   constructor() {
+
   }
 
-  async init(){
+  async init() {
     console.log('HomeView.init')
     console.log(Auth.currentUser)
     document.title = 'Home'   
@@ -51,23 +51,22 @@ class HomeView {
     }
   }
 
-  render(){
+  render() {
     const videoUrl = this.getVideoUrl()
 
     const template = html`
+      <div id="screen-content" class="${(Auth.currentUser.accessLevel) === 'admin' ? 'shifted' : ''}">
+        ${ (Auth.currentUser.accessLevel) === 'admin' ? html`
+          <div id="admin-nav" class="visible"></div>
+        `: html`
+          <div id="admin-nav"></div>
+        `}
 
-    <div id="screen-content" class="${(Auth.currentUser.accessLevel) === 'admin' ? 'shifted' : ''}">
-      ${ (Auth.currentUser.accessLevel) === 'admin' ? html`
-        <div id="admin-nav" class="visible"></div>
-      `: html`
-        <div id="admin-nav"></div>
-      `}
+        <sc-app-header></sc-app-header>
 
-      <sc-app-header></sc-app-header>
-
-      <div class="page-content">        
+        <div class="page-content">        
         
-        <!--HERO-->
+          <!--HERO-->
           <div id="home">
             <div class="hero-banner">
               <video autoplay muted loop class="hero-video">
@@ -79,24 +78,24 @@ class HomeView {
               </button>
               <div id="hero-content">
                 <h1>Come experience Geelong's Festival of Lights!</h1>
-                <p>We are back again! Enjoy family-friendly fireworks, laser shows, light installations with over 100,000 blubs and eat the night away.</p>
+                <p>We are back again! Enjoy family-friendly fireworks, laser shows, light installations with over 100,000 bulbs and eat the night away.</p>
                 <h3 style="font-weight: bold; color: #FFC600;">From 24 to 25 August 2024.</h3>
                 <button class="jumpTo">Find an event &#8595;</button>
               </div>
             </div>
           </div>
 
-        <!--EVENTS-->
-        <!-- use react grid to create events layout -->
+          <!--EVENTS-->
+          <!-- use react grid to create events layout -->
 
           <div id="events">
             <div id="filter-container"></div>
           </div>
 
-        <!--VENUE-->
+          <!--VENUE-->
           <div id="venue"></div>
 
-        <!--ABOUT-->
+          <!--ABOUT-->
           <div id="about">
             <div class="about-container">
               <div id="about-info">
@@ -113,11 +112,10 @@ class HomeView {
               <div id="contact-form"></div>
             </div>
           </div>
+        </div>
 
-      </div>   
-
-      <sc-app-footer></sc-app-footer>
-    
+        <sc-app-footer></sc-app-footer>
+      </div>
     `
     render(template, App.rootEl)
 

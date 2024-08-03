@@ -437,6 +437,54 @@
   font-weight: bold !important;
 }
 
+.new-event-form .form-text {
+  margin: .25em 0;
+}
+
+.new-event-form .form-section {
+  background-color: #bdbdbd;
+  padding: 1em;
+}
+
+.new-event-form .MuiFormLabel-root.MuiInputLabel-root {
+  font-family: var(--base-font-family) !important;
+  font-size: .75em !important;
+}
+
+.new-event-form .MuiInputBase-root, .new-event-form label {
+  color: #000;
+  font-size: .75em;
+}
+
+.new-event-form .MuiOutlinedInput.root .MuiOutlinedInput-notchedOutline {
+  border: 1px solid #000;
+}
+
+.new-event-form .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: .2em solid #ffc600;
+}
+
+.new-event-form .MuiInputLabel-shrink {
+  color: #ffc600;
+}
+
+.new-event-form #tag-section .form-sub, .new-event-form #tag-section .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label {
+  font-size: 1em;
+}
+
+.new-event-form #tag-section .form-checkbox .MuiCheckbox-root {
+  color: #505050;
+}
+
+.new-event-form #tag-section .form-checkbox .MuiCheckbox-root.Mui-checked {
+  color: #ffc600;
+}
+
+.new-event-form #tag-section .form-checkbox .MuiButtonBase-root.MuiCheckbox-root {
+  margin-left: .3em;
+  padding: .3em;
+}
+
 @media (width <= 768px) {
   .event-card {
     max-width: 32%;
