@@ -101,12 +101,10 @@ class AppHeader extends LitElement {
                     height: var(--app-header-height);
                     background-color: #000000;
                     border-bottom: 0.2em solid #FFC600;
-
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     align-items: center;
                     z-index: 10;
-
                     position: sticky;
                     top: 0;
                 }
@@ -131,15 +129,10 @@ class AppHeader extends LitElement {
                 .app-header-nav {
                     grid-column: 2;
                     justify-content: center;
-
                     ul {
                         list-style-type: none;
                         margin: 0;
                         padding: 0;
-
-                        font-family: var(--base-font-family);
-                        font-weight: 700;
-
                         display: flex;
                         justify-content: space-evenly;
                     }
@@ -149,6 +142,9 @@ class AppHeader extends LitElement {
                         text-align: center;
                         padding: 0.75em;
                         text-decoration: none;
+                        font-size:1.2em;
+                        font-family: var(--base-font-family);
+                        font-weight: 700;
                     }
                     .nav-item:hover, .nav-item.active {
                         background-color: #000000;
@@ -216,14 +212,12 @@ class AppHeader extends LitElement {
 
                 <nav class="app-header-nav">
                     <ul>
-                        <li><a class="nav-item" href="#home">Home</a></li>
+                        <li><a class="nav-item active" href="#home">Home</a></li> 
                         <li><a class="nav-item" href="#events">Events</a></li>
                         <li><a class="nav-item" href="#venue">Venue</a></li>
                         <li><a class="nav-item" href="#about">About</a></li>
                     </ul>
                 </nav>
-
-
             </header>
         `;
     }

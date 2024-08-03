@@ -10,14 +10,6 @@ import VenueCard from '../../components/react/sc-venue-cards.js'
 import AdminNav from '../../components/sc-admin-nav.js'
 
 
-import React, { useState } from 'react'
-import { Grid, Box, Button, Stack, Typography, useMediaQuery, Select, MenuItem } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationDot, faMap, faWheelchair, faParking, faBus } from '@fortawesome/free-solid-svg-icons'
-import '../../scss/react.scss'
-
-
 class HomeView {
   constructor() {
   }
@@ -25,7 +17,7 @@ class HomeView {
   async init(){
     console.log('HomeView.init')
     console.log(Auth.currentUser)
-    document.title = 'Home'   
+    document.title = 'Southern Coast Festival of Lights'   
     
     // await this.getEvents() // only use when front and back are talking
     this.render()
@@ -75,7 +67,6 @@ class HomeView {
       <sc-app-header></sc-app-header>
 
       <div class="page-content">        
-        
         <!--HERO-->
           <div id="home">
             <div class="hero-banner">
