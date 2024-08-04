@@ -2,6 +2,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 
 // ROOT -------------------------------
@@ -62,6 +63,7 @@ html {
 #home {
     border-bottom: 0.2em solid #FFC600;
     height: calc(100vh - 80px); //to compensate for header, otherwise div spills over viewport
+    scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 .hero-banner {
     width: 100vw;
@@ -149,6 +151,7 @@ html {
 #events {
     padding-top: 1em;
     border-bottom: 0.2em solid #FFC600;
+    scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 
 // EVENT FILTER
@@ -175,6 +178,7 @@ html {
 #venue {
     padding-top: 1em;
     border-bottom: 0.2em solid #FFC600;
+    scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 .venue-container {
     display: flex;
@@ -259,6 +263,7 @@ html {
 #about {
     padding-top: 1em;
     border-bottom: 0.2em solid #FFC600;
+    scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 .about-container {
     display: grid;

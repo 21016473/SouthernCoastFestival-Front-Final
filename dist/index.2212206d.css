@@ -473,6 +473,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-margin-top: 80px;
 }
 
 #root {
@@ -526,6 +527,7 @@ html {
 #home {
   border-bottom: .2em solid #ffc600;
   height: calc(100vh - 80px);
+  scroll-margin-top: 80px;
 }
 
 .hero-banner {
@@ -619,6 +621,7 @@ html {
 #events {
   border-bottom: .2em solid #ffc600;
   padding-top: 1em;
+  scroll-margin-top: 80px;
 }
 
 #filter-container {
@@ -642,6 +645,7 @@ html {
 #venue {
   border-bottom: .2em solid #ffc600;
   padding-top: 1em;
+  scroll-margin-top: 80px;
 }
 
 .venue-container {
@@ -734,6 +738,7 @@ html {
 #about {
   border-bottom: .2em solid #ffc600;
   padding-top: 1em;
+  scroll-margin-top: 80px;
 }
 
 .about-container {
