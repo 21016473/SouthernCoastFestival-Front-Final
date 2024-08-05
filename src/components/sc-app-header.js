@@ -83,7 +83,6 @@ class AppHeader extends LitElement {
                         color: #000000;
                         text-shadow: none;
                     }
-
                     0%,
                     19%,
                     21%,
@@ -157,29 +156,21 @@ class AppHeader extends LitElement {
                 }
 
                 @media (max-width: 768px) {
-                    .app-header {
-                        height: 4em;
-                    }
+
                     .app-header-logo {
                         width: 10em;
-                        height: 2.5em;
+                        height: 3em;
                     }
                     .app-header-nav {
                         .nav-item {
                             padding: 0.5em;
-                            font-size: 0.8em;
+                            font-size: 1.2em;
                         }
                     }
                 }
                 
-                @media (max-width: 530px) {
-                    .app-header-logo {
-                        width: 9em;
-                        height: 2.5em;
-                    }
-                }
 
-                @media (max-width: 530px) {
+                @media (max-width: 768px) {
                     .app-header {
                         justify-content: space-between;
                         flex-wrap: wrap;
@@ -198,8 +189,8 @@ class AppHeader extends LitElement {
                         background-image: url(${longLogo});
                         display: flex;
                         align-items: center;
-                        width: 9em;
-                        height: 2.5em;
+                        height: 3.5em;
+                        width: 12em;
                     }
                 }
             </style>

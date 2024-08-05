@@ -17,7 +17,7 @@ const venueCards = () => {
     // array of navigation items
     const sections = [
         { id: 'location', label: 'Location', icon: faLocationDot },
-        { id: 'map', label: 'Festival Map', icon: faMap },
+        { id: 'map', label: 'Event Map', icon: faMap },
         { id: 'accessibility', label: 'Accessibility', icon: faWheelchair },
         { id: 'parking', label: 'Parking', icon: faParking },
         { id: 'transport', label: 'Transport', icon: faBus },
@@ -25,59 +25,53 @@ const venueCards = () => {
 
     return (
         <>
-        {isSmallScreen ? (
-            <Box className="venue-nav-list">
-                <Select 
-                    value={activeSection} 
-                    onChange={(e) => handleButtonClick(e.target.value)}
-                    sx={{ color: '#FFFFFF' }}
-                >
-                    {sections.map((section) => (
-                        <MenuItem key={section.id} value={section.id}>
-                            <FontAwesomeIcon icon={section.icon} style={{marginRight:'5px'}} />{section.label}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </Box>
-        ) : (
-            <Grid container spacing={1} className="venue-nav">
+{/*         <Box className="venue-container">
+        <Box
+                sx={{
+                    overflowX: isSmallScreen ? 'auto' : 'visible',
+                    display: 'flex',
+                    flexDirection: isSmallScreen ? 'row' : 'column',
+                    whiteSpace: 'nowrap',
+                }}
+            >
                 {sections.map((section) => (
-                    <Grid item key={section.id}>
-                        <Button onClick={() => handleButtonClick(section.id)}>
-                            <FontAwesomeIcon icon={section.icon} style={{marginRight:'5px'}} />{section.label}
-                        </Button>
-                    </Grid>
+                    <Button
+                        key={section.id}
+                        onClick={() => handleButtonClick(section.id)}
+                        variant={activeSection === section.id ? 'contained' : 'outlined'}
+                        startIcon={<FontAwesomeIcon icon={section.icon} />}
+                        sx={{ flexShrink: 0 }}
+                    >
+                        {section.label}
+                    </Button>
                 ))}
-            </Grid>
-        )}
+            </Box>
+            
+        </Box> */}
         
 
         <Box className="venue-container">
-            {activeSection === 'location' && (
-                <Box id="location">
+        {activeSection === 'location' && (
+                <Box id="location" sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Stack>
                         <Typography className="subtitle">
-                            Location
+                        <FontAwesomeIcon icon={faLocationDot} /> Location
                         </Typography>
                         <Typography className="paragraph">Rippleside Park, Bell Parade Geelong, Victoria, Australia</Typography>
-                    </Stack>
-                    <Box className="google-map">
+                        <Box className="google-map">
                         <iframe 
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3138.567231010363!2d144.35266371147935!3d-38.12700147178166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad416b703b7800b%3A0xf04567605324bc0!2sRippleside%20Park!5e0!3m2!1sen!2sau!4v1721380831126!5m2!1sen!2sau" 
-                            width="600" 
-                            height="450" 
-                            style={{ border: 0}} 
                             allowFullScreen="" 
                             loading="lazy"
-                        >
-                        </iframe>
-                    </Box>
+                        ></iframe>
+                        </Box>
+                    </Stack>
                 </Box>
             )}
             {activeSection === 'map' && (
                 <Box id="map">
-                    <Box id="map-img"></Box>
-                    <Typography className="subtitle">Festival Map</Typography>
+                <Typography className="subtitle">Festival Map</Typography>
+                <Box id="map-img"></Box>
                 </Box>
             )}
             {activeSection === 'accessibility' && (
