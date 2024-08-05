@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
-import { Box, Typography, TextField, Stack, Button, Snackbar, MenuItem, Checkbox, Select, Dialog, DialogTitle, DialogContent, DialogActions, FormControlLabel, Grid } from '@mui/material'
+import { Box, Typography, TextField, Stack, Button, Snackbar, MenuItem, Checkbox, Select, Dialog, DialogTitle, DialogContent, DialogActions, FormControl, FormControlLabel, Grid, OutlinedInput, InputLabel} from '@mui/material'
 import '../../scss/react.scss'
 import Event from '../../Event'
 
 const NewPostForm = ({ open, onClose }) => {
     const [formData, setFormData] = useState({
         eventdisplayname: '',
+        vendorcontactname: '',
         vendorcontactemail: '',
         vendorcontactphone: '',
         eventimage: '',
         eventcategory: '',
         eventtag: [],
-        eventoperationdatetimestart: '',
-        eventoperationdatetimeend: '',
+        eventsaturdaytime: '',
+        eventsundaytime: '',
         eventdescription: '',
         eventstallnumber: '',
     })
@@ -47,11 +48,23 @@ const NewPostForm = ({ open, onClose }) => {
         }
     }
 
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return re.test(email)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         if (!formData.eventdisplayname || !formData.vendorcontactemail || !formData.vendorcontactphone) {
             setSnackbarMessage('Please fill out all required fields')
+            setSnackbarOpen(true)
+            return
+        }
+
+        if (!validateEmail(formData.vendorcontactemail)) {
+            setSnackbarMessage('Please enter a valid email address')
+            console.log('Enter a valid email address')
             setSnackbarOpen(true)
             return
         }
@@ -74,34 +87,53 @@ const NewPostForm = ({ open, onClose }) => {
             <DialogContent>
                 <Box className="new-event-form">
                     <form onSubmit={handleSubmit}>
-                        <Box>
+                        <Box className="form-content">
                             <Stack>
                                 <TextField variant="outlined" label="Event Name" className="form-text" size="small" name="eventdisplayname" value={formData.eventdisplayname} onChange={handleChange}></TextField>
-                                <Stack direction="row">
+                                <Stack direction="row" className="vendor-details">
+                                    <TextField variant="outlined" label="Vendor Name" className="form-text" size="small" name="vendorcontactname" value={formData.vendorcontactname} onChange={handleChange}></TextField>
                                     <TextField variant="outlined" label="Vendor Email" className="form-text" size="small" name="vendorcontactemail" value={formData.vendorcontactemail} onChange={handleChange}></TextField>
                                     <TextField variant="outlined" label="Vendor Phone Number" className="form-text" size="small" name="vendorcontactphone" value={formData.vendorcontactphone} onChange={handleChange}></TextField>
                                 </Stack>
                                 <Button>Upload Image</Button>
-                                <Select
-                                    label="Select category"
-                                    name="eventcategory"
-                                    value={formData.eventcategory}
-                                    onChange={handleChange}
-                                >
-                                    <MenuItem value="">None</MenuItem>
-                                    <MenuItem value="Food + Drink">Food + Drink</MenuItem>
-                                    <MenuItem value="Entertainment">Entertainment</MenuItem>
-                                    <MenuItem value="Shop">Shop</MenuItem>
-                                </Select>
+                                <FormControl>
+                                    <Typography>Select Category:</Typography>
+                                    <Select
+                                        displayEmpty
+                                        name="eventcategory"
+                                        value={formData.eventcategory}
+                                        onChange={handleChange}
+                                        input={<OutlinedInput />}
+                                        className="category-dropdown"
+                                        renderValue={(selected) => {
+                                            if (!selected) {
+                                                return <em>None</em>
+                                            }
+                                            return selected
+                                        }}
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                    >
+                                        <MenuItem disabled value=""><em>None</em></MenuItem>
+                                        <MenuItem value="Food + Drink">Food + Drink</MenuItem>
+                                        <MenuItem value="Entertainment">Entertainment</MenuItem>
+                                        <MenuItem value="Shop">Shop</MenuItem>
+                                    </Select>
+                                </FormControl>
                                 <Box className="form-section" id="tag-section">
                                     <Typography className="form-sub">Select Tags</Typography>
-                                    <Stack direction="row">
-                                        <FormControlLabel className="form-checkbox" label="Family Friendly" control={<Checkbox value="Family Friendly" checked={formData.eventtag.includes("Family Friendly")} onChange={handleChange} />} />
-                                        <FormControlLabel className="form-checkbox" label="18+ Adults Only" control={<Checkbox value="18+ Adults Only" checked={formData.eventtag.includes("18+ Adults Only")} onChange={handleChange} />} />
-                                        <FormControlLabel className="form-checkbox" label="For Children" control={<Checkbox value="For Children" checked={formData.eventtag.includes("For Children")} onChange={handleChange} />} />
-                                    </Stack>
+                                    <Grid container className="tag-grid">
+                                        <Grid item>
+                                            <FormControlLabel className="form-checkbox" label="Family Friendly" control={<Checkbox value="Family Friendly" checked={formData.eventtag.includes("Family Friendly")} onChange={handleChange} />} />
+                                        </Grid>
+                                        <Grid item>
+                                            <FormControlLabel className="form-checkbox" label="18+ Adults Only" control={<Checkbox value="18+ Adults Only" checked={formData.eventtag.includes("18+ Adults Only")} onChange={handleChange} />} />
+                                        </Grid>
+                                        <Grid item>
+                                            <FormControlLabel className="form-checkbox" label="For Children" control={<Checkbox value="For Children" checked={formData.eventtag.includes("For Children")} onChange={handleChange} />} /> 
+                                        </Grid>
+                                    </Grid>
                                     <Typography className="form-sub">Entertainment and Shop refiners:</Typography>
-                                    <Grid container >
+                                    <Grid container className="tag-grid">
                                         <Grid item>
                                             <FormControlLabel className="form-checkbox" label="Light Show" control={<Checkbox value="Light Show" checked={formData.eventtag.includes("Light Show")} onChange={handleChange} />} />
                                         </Grid>
@@ -122,7 +154,7 @@ const NewPostForm = ({ open, onClose }) => {
                                         </Grid>
                                     </Grid>
                                     <Typography className="form-sub">Food and Drink refiners:</Typography>
-                                    <Grid container>
+                                    <Grid container className="tag-grid">
                                         <Grid item>
                                             <FormControlLabel className="form-checkbox" label="Food" control={<Checkbox value="Food" checked={formData.eventtag.includes("Food")} onChange={handleChange} />} />
                                         </Grid>
@@ -150,25 +182,25 @@ const NewPostForm = ({ open, onClose }) => {
                                     </Grid>
                                 </Box>
                                 <Typography>Hours of Operation</Typography>
-                                <Grid container>
-                                    <Stack>
+                                <Grid container className="time-details">
+                                    <Stack className="time-col">
                                         <Typography>Saturday</Typography>
                                         <TextField 
-                                            variant="outlined" label="start and end time" className="form-text" size="small" type="datetime-local" name="eventoperationdatetimestart" value={formData.eventoperationdatetimestart} onChange={handleChange} InputLabelProps={{ shrink: true }}
+                                            variant="outlined" className="form-text" size="small" name="eventsaturdaytime" value={formData.eventsaturdaytime} onChange={handleChange} InputLabelProps={{ shrink: true }}
                                         />
                                     </Stack>
-                                    <Stack>
+                                    <Stack className="time-col">
                                         <Typography>Sunday</Typography>
                                         <TextField 
-                                            variant="outlined" label="start and end time" className="form-text" size="small" type="datetime-local" name="eventoperationdatetimeend" value={formData.eventoperationdatetimeend} onChange={handleChange} InputLabelProps={{ shrink: true }}
+                                            variant="outlined" className="form-text" size="small" name="eventsundaytime" value={formData.eventsundaytime} onChange={handleChange} InputLabelProps={{ shrink: true }}
                                         />
                                     </Stack>
                                 </Grid>
                                 <TextField variant="outlined" label="Add description" className="form-text" size="small" multiline rows={4} name="eventdescription" value={formData.eventdescription} onChange={handleChange}></TextField>
                                 <TextField variant="outlined" label="Allocate stall number" className="form-text" size="small" name="eventstallnumber" value={formData.eventstallnumber} onChange={handleChange}></TextField>
                                 <Stack direction="row" spacing={2} justifyContent="flex-end">
-                                    <Button onClick={onClose} variant="outlined" color="secondary">Cancel</Button>
-                                    <Button type="submit" variant="contained" color="primary">Submit</Button>
+                                    <Button onClick={onClose} variant="outlined" color="secondary" className="event-button">Cancel</Button>
+                                    <Button type="submit" variant="contained" color="primary" className="event-button">Submit</Button>
                                 </Stack>
                             </Stack>
                         </Box>
