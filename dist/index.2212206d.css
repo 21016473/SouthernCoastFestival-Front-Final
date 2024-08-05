@@ -445,6 +445,16 @@
   .form-container {
     width: auto;
   }
+
+  .MuiList-root.MuiMenu-list {
+    font-family: var(--base-font-family);
+    background-color: #000;
+    border: 1px solid #ffc600;
+    border-radius: .2em;
+    width: 40vw;
+    padding: 1em;
+    font-size: 1em;
+  }
 }
 
 @media (width <= 600px) {

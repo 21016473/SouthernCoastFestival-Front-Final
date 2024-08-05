@@ -5,6 +5,7 @@
     font-family: var(--base-font-family) !important;
 }
 
+
 // CATEGORY FILTER ---------------------------------------
 #category-container {
     width: 80%;
@@ -439,6 +440,15 @@
     }
     .form-container {
         width: auto;
+    }
+    .MuiList-root.MuiMenu-list {
+        background-color: #000000;
+        font-family: var(--base-font-family);
+        font-size: 1em;
+        padding: 1em;
+        border: 1px solid #FFC600;
+        border-radius: 0.2em;
+        width: 40vw;
     }
 }
 
