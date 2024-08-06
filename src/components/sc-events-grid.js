@@ -77,7 +77,28 @@ const EventContainer = () => {
                         <Select
                             value={selectedCategory}
                             onChange={(e) => handleCategoryChange(e.target.value)}
-                            sx={{ color: '#FFFFFF' }}
+                            sx={{ 
+                                color: '#FFFFFF', 
+                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    border: '0.1em solid #FFC600'
+                                },
+                            }}
+                            MenuProps={{
+                                PaperProps: {
+                                    sx: {
+                                        backgroundColor: '#2b2b2b',
+                                        color: "#FFFFFF",
+                                        '& .MuiList-root.MuiMenu-list': {
+                                            backgroundColor: '#2b2b2b',
+                                            fontFamily: 'var(--base-font-family)',
+                                            fontSize: '1em',
+                                            padding: '1em',
+                                            border: 'none',
+                                            width: '90%'
+                                        }
+                                    }
+                                }
+                            }}  
                         >
                             {categories.map((category) => (
                                 <MenuItem key={category.name} value={category.name}>

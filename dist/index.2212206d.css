@@ -34,7 +34,8 @@
 
 #category-container .category-list .MuiInputBase-root {
   background-color: #2b2b2b;
-  width: 40%;
+  width: 80%;
+  min-width: 10em;
   margin: auto;
 }
 
@@ -198,26 +199,37 @@
   border: 1px solid #bdbdbd;
   border-radius: .2em;
   padding: .75em;
+  font-size: 1em;
 }
 
 .venue-nav .MuiButtonBase-root:hover {
   background-color: #ffc600;
   border: 1px solid #ffc600;
-  font-weight: bold;
 }
 
-.venue-nav-list {
+.venue-nav {
   width: 100%;
+}
+
+.venue-nav .MuiBox-root {
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1em;
   display: flex;
 }
 
-.venue-nav-list .MuiInputBase-root {
-  background-color: #2b2b2b;
-  width: 40%;
+.venue-nav .MuiButtonBase-root.MuiButton-root {
+  font-family: var(--base-font-family);
+  margin: .1em;
+}
+
+.venue-nav .MuiInputBase-root {
+  background-color: #bdbdbd;
+  width: 100%;
   margin: auto;
 }
 
-.venue-nav-list .Mui-focused .MuiOutlinedInput-notchedOutline {
+.venue-nav .Mui-focused .MuiOutlinedInput-notchedOutline {
   border: 2px solid #ffc600 !important;
 }
 
@@ -226,7 +238,8 @@
   background-color: #2b2b2b;
   border-radius: .2em;
   height: auto;
-  padding: .5em 1em;
+  margin-bottom: 3em;
+  padding: 1em;
 }
 
 .form-container .form-title {
@@ -445,6 +458,32 @@
   .form-container {
     width: auto;
   }
+
+  .MuiList-root.MuiMenu-list {
+    font-family: var(--base-font-family);
+    background-color: #000;
+    border: 1px solid #ffc600;
+    border-radius: .2em;
+    width: 40vw;
+    padding: 1em;
+    font-size: 1em;
+  }
+
+  .venue-nav {
+    width: 100%;
+  }
+
+  .venue-nav .MuiBox-root {
+    flex-flow: wrap;
+    justify-content: center;
+    margin-bottom: 1em;
+    display: flex;
+  }
+
+  .venue-nav-list {
+    justify-content: center;
+    display: flex;
+  }
 }
 
 @media (width <= 600px) {
@@ -474,6 +513,26 @@
 html {
   scroll-behavior: smooth;
   scroll-margin-top: 80px;
+}
+
+h1, h2, p, ul {
+  font-family: var(--base-font-family);
+  color: #fff;
+  font-size: 1em;
+}
+
+h1 {
+  color: #ffc600;
+  font-size: 1.8em;
+}
+
+h2 {
+  color: #ffc600;
+  font-size: 1.2em;
+}
+
+.mobile-title {
+  display: none;
 }
 
 #root {
@@ -533,7 +592,7 @@ html {
 .hero-banner {
   flex-wrap: wrap;
   place-content: flex-end center;
-  width: 100vw;
+  width: 100%;
   height: calc(100vh - 80px);
   display: flex;
   position: relative;
@@ -554,7 +613,7 @@ html {
   background-color: #000000a3;
   flex-direction: column;
   align-items: center;
-  width: 70vw;
+  width: 60vw;
   margin-bottom: 1em;
   padding: 1.5em;
   display: flex;
@@ -615,24 +674,24 @@ html {
 }
 
 .hero-banner .video-control i {
-  font-size: 1.8em;
+  font-size: 1.5em;
 }
 
 #events {
   border-bottom: .2em solid #ffc600;
+  min-height: calc(100vh - 80px);
   padding-top: 1em;
   scroll-margin-top: 80px;
 }
 
 #filter-container {
-  width: 80%;
-  height: auto;
+  width: 70vw;
   margin: auto;
   padding-bottom: 1em;
 }
 
 .events-grid {
-  width: 80%;
+  width: 70vw;
   margin: auto;
   padding-top: 1em;
   display: grid;
@@ -644,24 +703,22 @@ html {
 
 #venue {
   border-bottom: .2em solid #ffc600;
-  padding-top: 1em;
+  min-height: calc(100vh - 80px);
+  padding-top: 3em;
   scroll-margin-top: 80px;
 }
 
 .venue-container {
   flex-direction: column;
   align-items: center;
-  padding-bottom: 1em;
+  width: 70vw;
+  margin: auto;
   display: flex;
 }
 
 .venue-container #location, .venue-container #map, .venue-container #accessibility, .venue-container #parking, .venue-container #transport {
-  background-color: #2b2b2b;
-  border-radius: .2em;
-  width: 70%;
-  height: auto;
-  margin: .5em;
-  padding: 1em;
+  width: 70vw;
+  height: 65vh;
 }
 
 .venue-container #location .subtitle, .venue-container #location .bold, .venue-container #location .paragraph, .venue-container #map .subtitle, .venue-container #map .bold, .venue-container #map .paragraph, .venue-container #accessibility .subtitle, .venue-container #accessibility .bold, .venue-container #accessibility .paragraph, .venue-container #parking .subtitle, .venue-container #parking .bold, .venue-container #parking .paragraph, .venue-container #transport .subtitle, .venue-container #transport .bold, .venue-container #transport .paragraph {
@@ -669,21 +726,22 @@ html {
   color: #fff;
   text-align: left;
   margin: 0;
+  font-size: 1em;
+  font-weight: 200;
 }
 
 .venue-container #location .subtitle, .venue-container #map .subtitle, .venue-container #accessibility .subtitle, .venue-container #parking .subtitle, .venue-container #transport .subtitle {
-  font-size: 1em;
+  color: #ffc600;
+  font-size: 1.8em;
   font-weight: bold;
 }
 
 .venue-container #location .bold, .venue-container #map .bold, .venue-container #accessibility .bold, .venue-container #parking .bold, .venue-container #transport .bold {
-  font-size: .9em;
   font-weight: bold;
 }
 
 .venue-container #location .paragraph, .venue-container #map .paragraph, .venue-container #accessibility .paragraph, .venue-container #parking .paragraph, .venue-container #transport .paragraph {
   margin: .5em 0;
-  font-size: .75em;
 }
 
 .venue-container #location .info, .venue-container #map .info, .venue-container #accessibility .info, .venue-container #parking .info, .venue-container #transport .info {
@@ -696,26 +754,20 @@ html {
   display: flex;
 }
 
-.venue-container #location .left {
-  flex-direction: column;
-  display: flex;
-}
-
 .venue-container #location .google-map {
-  min-height: 200px;
-  margin: .5em;
+  min-height: 70vh;
   position: relative;
 }
 
 .venue-container #location .google-map iframe {
-  max-width: 100%;
-  max-height: 100%;
-  position: relative;
-  top: 0;
-  left: 0;
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  inset: 0;
 }
 
 .venue-container #map {
+  flex-direction: column;
   display: flex;
 }
 
@@ -730,50 +782,76 @@ html {
   background-position: center;
   background-size: cover;
   border-radius: .2em;
-  width: 100%;
-  height: 350px;
+  height: 100%;
   margin: .5em;
 }
 
 #about {
   border-bottom: .2em solid #ffc600;
-  padding-top: 1em;
+  min-height: calc(100vh - 80px);
   scroll-margin-top: 80px;
 }
 
 .about-container {
   grid-template-columns: auto auto;
-  width: 90%;
+  width: 70vw;
   margin: auto;
-  padding: 1em 0;
+  padding-top: 3em;
   display: grid;
 }
 
-.about-container h1, .about-container h2, .about-container p {
-  font-family: var(--base-font-family);
-  color: #fff;
+#about-info {
+  padding-right: 1em;
 }
 
-.about-container h1 {
-  font-size: 1.5em;
-}
-
-.about-container h2 {
-  font-size: .9em;
-}
-
-.about-container p {
-  font-size: .75em;
-}
-
-.about-container #about-info, .about-container #contact-form {
-  margin: .5em;
+#contact-form {
+  margin-top: 5em;
 }
 
 @media (width <= 768px) {
+  #admin-nav {
+    z-index: 100;
+    width: 9em;
+    height: 100vh;
+    transition: transform .3s;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  #admin-nav.visible {
+    transform: translateX(0);
+  }
+
+  #screen-content {
+    margin-right: 0;
+  }
+
+  #screen-content.shifted {
+    width: 80vw;
+    margin-right: 9em;
+    transition: margin-right .3s;
+  }
+
+  .mobile-title {
+    justify-content: center;
+    display: flex;
+  }
+
   #home .video-control {
     top: 1em;
     right: 1em;
+  }
+
+  #events {
+    width: 80vw;
+    margin: auto;
+  }
+
+  #venue, .venue-container #location, .venue-container #map, .venue-container #location, .venue-container #map, .venue-container #accessibility, .venue-container #parking, .venue-container #transport {
+    width: 70vw;
+    margin: auto;
   }
 
   #location {
@@ -786,29 +864,24 @@ html {
     height: 300px;
   }
 
-  #map {
-    flex-direction: column-reverse;
-    display: flex;
-  }
-
-  #map h1 {
-    padding-left: .5em;
-  }
-
-  #map-img {
-    height: 300px !important;
-    margin: .5em 0 !important;
-  }
-
   .about-container {
     grid-template-rows: 1fr auto;
     grid-template-columns: auto;
+    width: 70vw;
+  }
+
+  #about-info {
+    padding-right: 0;
+  }
+
+  #contact-form {
+    margin-top: 1em;
   }
 }
 
 @media (width <= 400px) {
-  #location .google-map {
-    height: 250px;
+  #location, #location .google-map {
+    width: 95vw;
   }
 
   #map-img {

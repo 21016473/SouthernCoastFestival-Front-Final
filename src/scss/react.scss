@@ -40,7 +40,8 @@
         display: flex;
         .MuiInputBase-root {
             background-color: #2b2b2b;
-            width: 40%;
+            width: 80%;
+            min-width: 10em;
             margin: auto;
         }
         .Mui-focused .MuiOutlinedInput-notchedOutline {
@@ -208,19 +209,29 @@
         color: #000000;
         text-transform: capitalize;
         padding: 0.75em;
+        font-size: 1em;
     }
     .MuiButtonBase-root:hover {
         background-color: #FFC600;
-        font-weight: bold;
         border: 1px solid #FFC600;
     }
 }
-.venue-nav-list {
+.venue-nav {
     width: 100%;
-    display: flex;
+
+    .MuiBox-root {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 1em;
+    }
+    .MuiButtonBase-root.MuiButton-root {
+        margin: 0.1em;
+        font-family: var(--base-font-family);
+    }
     .MuiInputBase-root {
-        background-color: #2b2b2b;
-        width: 40%;
+        background-color: #bdbdbd;
+        width: 100%;
         margin: auto;
     }
     .Mui-focused .MuiOutlinedInput-notchedOutline {
@@ -233,7 +244,8 @@
     height: auto;
     background-color: #2b2b2b;
     border-radius: 0.2em;
-    padding: 0.5em 1em;
+    padding: 1em 1em;
+    margin-bottom: 3em;
     font-family: var(--base-font-family);
 
     .form-title {
@@ -437,6 +449,30 @@
     }
     .form-container {
         width: auto;
+    }
+    .MuiList-root.MuiMenu-list {
+        background-color: #000000;
+        font-family: var(--base-font-family);
+        font-size: 1em;
+        padding: 1em;
+        border: 1px solid #FFC600;
+        border-radius: 0.2em;
+        width: 40vw;
+    }
+    .venue-nav {
+        width: 100%;
+    
+        .MuiBox-root {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 1em;
+            flex-wrap: wrap;
+        }
+    }
+    .venue-nav-list {
+        display: flex;
+        justify-content: center;
     }
 }
 

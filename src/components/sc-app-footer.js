@@ -85,7 +85,7 @@ class AppFooter extends LitElement {
                 h2 {
                     color: #FFC600;
                     font-weight: normal;
-                    font-size: 1.25em;
+                    font-size: 1.5em;
                     margin: 0;
                 }
 
@@ -95,7 +95,7 @@ class AppFooter extends LitElement {
 
                 p {
                     color: #bdbdbd;
-                    font-size: 0.5em;
+                    font-size: 0.7em;
                     font-family: var(--base-font-family);
                 }
 
@@ -105,7 +105,7 @@ class AppFooter extends LitElement {
 
                 a {
                     font-family: var(--base-font-family);
-                    font-size: 0.6em;
+                    font-size: 0.7em;
                     text-decoration: none;
                     color: #FFC600;
                     text-align: center;

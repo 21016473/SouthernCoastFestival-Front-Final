@@ -9,7 +9,6 @@ import ContactForm from '../../components/react/sc-contact-form.js'
 import VenueCard from '../../components/react/sc-venue-cards.js'
 import AdminNav from '../../components/sc-admin-nav.js'
 
-
 class HomeView {
   constructor() {
   }
@@ -89,6 +88,7 @@ class HomeView {
         <!-- use react grid to create events layout -->
 
           <div id="events">
+            <h1 class="mobile-title">Events</h1>
             <div id="filter-container"></div>
           </div>
 
@@ -100,14 +100,19 @@ class HomeView {
             <div class="about-container">
               <div id="about-info">
                 <h1>About the Festival</h1>
-                <p>Transforming the city of Geelong into a luminous wonderland with art installations, dazzling displays, vibrant projections, and fireworks.</p>
+                <strong><p>Transforming the city of Geelong into a luminous wonderland with art installations, dazzling displays, vibrant projections, and fireworks.</p></strong>
                 <p>Celebrate creativity and community spirit as local artists, alongside talented performers, showcase their artistry.</p>
-                <p>Explore local shops offering unique wares, and savour delicious food from diverse local vendors, with moments that captivate all who attend.</p>
+                <p>Explore local shops offering unique wares, and savour delicious food from diverse local vendors with moments that captivate all who attend.</p>
                 <h2>Festival Dates</h2>
-                <p>Saturday to Sunday, 24th to 25th of August, 2024</p>
+                <ul>
+                  <li>Saturday and Sunday</li>
+                  <li>24 to 25 August 2024</li>
+                </ul>
                 <h2>Hours of Operation</h2>
-                <p>Saturday — 12:00PM to Midnight</p>
-                <p>Sunday — 11:00AM to 10:00PM</p>
+                <ul>
+                  <li>Saturday: Noon to midnight</li>
+                  <li>Sunday: 11am to 10pm</li>
+                </ul>
               </div>
               <div id="contact-form"></div>
             </div>

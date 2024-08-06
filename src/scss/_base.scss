@@ -5,6 +5,25 @@ html {
     scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 
+h1, h2, p, ul {
+    font-family: var(--base-font-family);
+    font-size: 1em;
+    color: #FFFFFF;
+}
+h1 {
+    font-size: 1.8em;
+    color: #FFC600;
+}
+h2 {
+    font-size: 1.2em;
+    color: #FFC600;
+}
+
+// HIDE A SECTION'S TITLE ON DESKTOP
+.mobile-title {
+    display: none;
+}
+
 // ROOT -------------------------------
 #root {
     position: absolute;
@@ -66,7 +85,7 @@ html {
     scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 .hero-banner {
-    width: 100vw;
+    width: 100%;
     height: calc(100vh - 80px);
     position: relative;
     overflow: hidden;
@@ -85,7 +104,7 @@ html {
         z-index: -1;
     }
     #hero-content {
-        width: 70vw;
+        width: 60vw;
         background-color: #000000a3;
         padding: 1.5em;
         display: flex;
@@ -142,13 +161,14 @@ html {
         transition: background-color 0.3s;
 
         i {
-            font-size: 1.8em;
+            font-size: 1.5em;
         }
     }
 }
 
 // EVENTS ---------------------------
 #events {
+    min-height: calc(100vh - 80px);
     padding-top: 1em;
     border-bottom: 0.2em solid #FFC600;
     scroll-margin-top: 80px; // Compensate for the sticky nav 
@@ -156,8 +176,7 @@ html {
 
 // EVENT FILTER
 #filter-container {
-    width: 80%;
-    height: auto;
+    width: 70vw;
     margin: auto;
     padding-bottom: 1em;
 }
@@ -165,7 +184,7 @@ html {
 // EVENT GRID
 .events-grid {
     display: grid;
-    width: 80%;
+    width: 70vw;
     margin: auto;
     padding-top: 1em;
 
@@ -176,40 +195,39 @@ html {
 
 // VENUE ---------------------------
 #venue {
-    padding-top: 1em;
+    padding-top: 3em;
     border-bottom: 0.2em solid #FFC600;
+    min-height: calc(100vh - 80px);
     scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 .venue-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 1em;
+    width: 70vw;
+    margin: auto;
 
     #location, #map, #accessibility, #parking, #transport {
-        height: auto;
-        width: 70%;
-        background-color: #2b2b2b;
-        margin: 0.5em;
-        border-radius: 0.2em;
-        padding: 1em;
+        height: 65vh;
+        width: 70vw;
 
         .subtitle, .bold, .paragraph {
             font-family: var(--base-font-family);
             color: #FFFFFF;
             margin: 0;
             text-align: left;
+            font-size: 1em;
+            font-weight: 200;
         }
         .subtitle {
-            font-size: 1em;
+            font-size: 1.8em;
             font-weight: bold;
+            color: #FFC600;
         }
         .bold {
-            font-size: 0.9em;
             font-weight: bold;
         }
         .paragraph {
-            font-size: 0.75em;
             margin: 0.5em 0;
         }
         
@@ -222,25 +240,23 @@ html {
         display: flex;
         justify-content: space-between;
 
-        .left {
-            display: flex;
-            flex-direction: column;
-        }
         .google-map {
-            margin: 0.5em;
             position: relative;
-            min-height: 200px;
+            min-height: 70vh;
         }
         .google-map iframe {
-            max-height: 100%;
-            max-width: 100%;
-            left: 0;
             top: 0;
-            position: relative;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 80%;
         }
     }
     #map {
         display: flex;
+        flex-direction: column;
 
         .subtitle {
             padding-left: 0.5em;
@@ -248,8 +264,7 @@ html {
         }
     }
     #map-img {
-        width: 100%;
-        height: 350px;
+        height: 100%;
         background-color: #bdbdbd;
         background-image: url('../../static/images/festival-map.png');
         background-size: cover;
@@ -261,46 +276,73 @@ html {
 
 // ABOUT ---------------------------
 #about {
-    padding-top: 1em;
+    min-height: calc(100vh - 80px);
     border-bottom: 0.2em solid #FFC600;
     scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 .about-container {
     display: grid;
     grid-template-columns: auto auto;
-    width: 90%;
+    padding-top: 3em;
+    width: 70vw;
     margin: auto;
-    padding: 1em 0;
-
-    h1, h2, p {
-        font-family: var(--base-font-family);
-        color: #FFFFFF;
-    }
-    h1 {
-        font-size: 1.5em;
-    }
-    h2 {
-        font-size: 0.9em;
-    }
-    p {
-        font-size: 0.75em;
-    }
-
-    #about-info, #contact-form {
-        margin: 0.5em;
-    }
+}
+#about-info {
+    padding-right: 1em;
+}
+#contact-form {
+    margin-top: 5em;
 }
 
 // RESPONSIVE - TABLET --------------------------------------------
 @media all and (max-width: 768px) {
+    #admin-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 9em;
+        height: 100vh;
+        z-index: 100;
+        transition: transform 0.3s ease;
+        transform: translateX(100%);
+    }
+    #admin-nav.visible {
+        transform: translateX(0)
+    }
     
+    #screen-content {
+        margin-right: 0;
+    }
+    #screen-content.shifted {
+        margin-right: 9em;
+        transition: margin-right 0.3s ease;
+        width: 80vw;
+    }
+
+    .mobile-title {
+        display: flex;
+        justify-content: center;
+    }
     #home{
         .video-control { //to move pause button to the top, otherwise it enrcoaches on the info box
             top: 1em;
             right: 1em;
         }
     }
-
+    #events {
+        width: 80vw;
+        margin: auto;
+    }
+    #venue, .venue-container #location, .venue-container #map {
+        width: 70vw;
+        margin: auto;
+    }
+    .venue-container {
+        #location, #map, #accessibility, #parking, #transport {
+            width: 70vw;
+            margin: auto;
+        }
+    }
     #location {
         display: flex;
         flex-direction: column;
@@ -309,30 +351,25 @@ html {
             height: 300px;
         }
     }
-    #map {
-        display: flex;
-        flex-direction: column-reverse;
-
-        h1 {
-            padding-left: 0.5em;
-        }
-    }
-    #map-img {
-        height: 300px !important;
-        margin: 0.5em 0 !important;
-    }
-
     .about-container {
         grid-template-rows: 1fr auto;
         grid-template-columns: auto;
+        width: 70vw;
+    }
+    #about-info {
+        padding-right: 0;
+    }
+    #contact-form {
+        margin-top: 1em;
     }
 }
 
 // RESPONSIVE - MOBILE --------------------------------------------
 @media all and (max-width: 400px) {
     #location {
+        width: 95vw;
         .google-map {
-            height: 250px;
+            width: 95vw;
         }
     }
     #map-img {
