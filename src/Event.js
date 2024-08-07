@@ -1,5 +1,5 @@
 import App from './App'
-import Router from './Router'
+import Router, { gotoRoute } from './Router'
 import Toast from './Toast'
 
 class Event {
@@ -26,6 +26,7 @@ class Event {
             // run fail() function if set
             if(typeof fail == 'function') fail()
         } else {
+            gotoRoute('/')
         }
     }
 

@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faB, faBowlFood, faLightbulb, faShop } from '@fortawesome/free-solid-svg-icons'
 
-import placeholderImg from '../../static/images/chef-bryan-entertainment.jpg'
+import placeholderImg from '../../static/images/alisa-music-entertainment-minner.jpg'
 import '../scss/react.scss'
 
 // import Event

@@ -3,6 +3,8 @@ import { Box, Typography, TextField, Stack, Button, Snackbar, MenuItem, Checkbox
 import '../../scss/react.scss'
 import Event from '../../Event'
 
+const placeholderImage = 'https://via.placeholder.com/300x200.png?text=No+Image'
+
 const NewPostForm = ({ open, onClose }) => {
     const [formData, setFormData] = useState({
         eventdisplayname: '',
@@ -20,6 +22,7 @@ const NewPostForm = ({ open, onClose }) => {
 
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMessage, setSnackbarMessage] = useState('')
+    const [imagePreview, setImagePreview] = useState(placeholderImage)
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target
@@ -48,6 +51,20 @@ const NewPostForm = ({ open, onClose }) => {
         }
     }
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0]
+        setFormData({
+            ...formData,
+            eventimage: file
+        })
+        const reader = new FileReader()
+        reader.onloadend = () => {
+            setImagePreview(reader.result)
+        }
+        reader.readAsDataURL(file)
+    }
+
+
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return re.test(email)
@@ -67,6 +84,11 @@ const NewPostForm = ({ open, onClose }) => {
             console.log('Enter a valid email address')
             setSnackbarOpen(true)
             return
+        }
+
+        const data = new FormData()
+        for (const key in formData) {
+            data.append(key, formData[key])
         }
 
         try {
@@ -95,7 +117,17 @@ const NewPostForm = ({ open, onClose }) => {
                                     <TextField variant="outlined" label="Vendor Email" className="form-text" size="small" name="vendorcontactemail" value={formData.vendorcontactemail} onChange={handleChange}></TextField>
                                     <TextField variant="outlined" label="Vendor Phone Number" className="form-text" size="small" name="vendorcontactphone" value={formData.vendorcontactphone} onChange={handleChange}></TextField>
                                 </Stack>
-                                <Button>Upload Image</Button>
+                                <Stack direction="row" className="image-input">
+                                    {imagePreview && (
+                                        <Box>
+                                            <img src={imagePreview} alt="Event Image Preview" style={{ width: '10em', height: '7.5em', objectFit: 'cover', borderRadius: '0.2em'}} />
+                                        </Box>
+                                    )}
+                                    <Button variant="outlined" component="label" className="upload-image">
+                                        Upload Image
+                                        <input type="file" hidden name="eventimage" onChange={handleImageChange} />
+                                    </Button>
+                                </Stack>
                                 <FormControl>
                                     <Typography>Select Category:</Typography>
                                     <Select
