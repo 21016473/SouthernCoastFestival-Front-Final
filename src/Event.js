@@ -8,14 +8,13 @@ class Event {
         this.currentUser = {}
     }
 
-    async newEvent(formData) {
+    async newEvent(data) {
         const response = await fetch(`${App.apiBase}/events`, {
             method: 'POST',
             headers: { 
                 "Authorization": `Bearer ${localStorage.accessToken}`,
-                "Content-Type": "application/json"
             },
-            body: JSON.stringify(formData)
+            body: data
         })
 
         // if response not ok

@@ -11,6 +11,7 @@
     "@mui/material": "^5.16.0",
     "@mui/system": "^5.16.0",
     "@mui/x-date-pickers": "^7.12.0",
+    "axios": "^1.7.3",
     "gsap": "^3.12.5",
     "lit": "^3.1.4",
     "lit-html": "^3.1.4",
@@ -32,6 +33,7 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0",
+    "buffer": "^6.0.3",
     "nodemon": "^3.1.4",
     "parcel": "^2.12.0",
     "sass": "^1.77.6"

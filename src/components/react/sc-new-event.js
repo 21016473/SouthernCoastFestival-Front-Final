@@ -92,11 +92,11 @@ const NewPostForm = ({ open, onClose }) => {
         }
 
         try {
-            await Event.newEvent(formData);
+            await Event.newEvent(data);
             setSnackbarMessage('Event created')
             setSnackbarOpen(true)
             onClose()
-            console.log(formData)
+            console.log(FormData)
         } catch (error) {
             setSnackbarMessage('Failed to create event.')
             setSnackbarOpen(true)
