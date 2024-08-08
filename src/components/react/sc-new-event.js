@@ -64,7 +64,6 @@ const NewPostForm = ({ open, onClose }) => {
         reader.readAsDataURL(file)
     }
 
-
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return re.test(email)
@@ -92,11 +91,11 @@ const NewPostForm = ({ open, onClose }) => {
         }
 
         try {
-            await Event.newEvent(data);
+            await Event.newEvent(data)
             setSnackbarMessage('Event created')
             setSnackbarOpen(true)
             onClose()
-            console.log(FormData)
+            console.log(data)
         } catch (error) {
             setSnackbarMessage('Failed to create event.')
             setSnackbarOpen(true)

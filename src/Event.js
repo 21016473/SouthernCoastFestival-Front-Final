@@ -8,7 +8,25 @@ class Event {
         this.currentUser = {}
     }
 
+    async fetchImage() {
+        const response = await fetch({
+            method: "PUT",
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            body: JSON.stringify(file)
+        })
+
+        if(!response.ok) {
+            const err = await response.json()
+            if(err) console.log(err)
+        } else {
+            console.log('image fetched')
+        }
+    }
+
     async newEvent(data) {
+        // post request
         const response = await fetch(`${App.apiBase}/events`, {
             method: 'POST',
             headers: { 
