@@ -59,7 +59,8 @@ const NewPostForm = ({ open, onClose }) => {
         })
         const reader = new FileReader()
         reader.onloadend = () => {
-            setImagePreview(reader.result)
+            const imageUrl = `/images/${file.name}`
+            setImagePreview(imageUrl)
         }
         reader.readAsDataURL(file)
     }
@@ -94,6 +95,7 @@ const NewPostForm = ({ open, onClose }) => {
             await Event.newEvent(data)
             setSnackbarMessage('Event created')
             setSnackbarOpen(true)
+            setImagePreview(response.data.imageUrl)
             onClose()
             console.log(data)
         } catch (error) {

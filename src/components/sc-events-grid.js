@@ -145,7 +145,7 @@ const EventContainer = () => {
             ) : (
                 <Grid container spacing={3} className="card-grid">
                     {filteredEvents.map(event => {
-                        const imageUrl = event.eventimage ? `http://localhost:3000/${event.eventimage}` : placeholderImg;
+                        const imageUrl = event.eventimage ? `http://localhost:3000/images/${event.eventimage}` : placeholderImg;
 
                         return (
                             <Grid item xs={12} sm={6} md={4} lg={3} key={event._id}>
