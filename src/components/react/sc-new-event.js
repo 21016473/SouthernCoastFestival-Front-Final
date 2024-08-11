@@ -105,7 +105,7 @@ const NewEventForm = ({ open, onClose }) => {
             setSnackbarMessage('Event created successfully')
             setSnackbarOpen(true)
             onClose()
-            console.log(data)
+            console.log(formData)
         } catch (error) {
             setSnackbarMessage('Failed to create event.')
             setSnackbarOpen(true)

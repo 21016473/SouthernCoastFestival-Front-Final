@@ -31,9 +31,8 @@ h2 {
     bottom: 0;
     left: 0;
     right: 0;
-    overflow: hidden;
-    overflow-y: auto;
     background-color: #000000;
+    overflow-x: hidden;
 }
 
 // SCREEN CONTENT --------------------------
@@ -55,7 +54,7 @@ h2 {
     margin-right: 0;
 }
 #screen-content.shifted {
-    margin-right: 10em;
+    margin-right: 9em;
     transition: margin-right 0.3s ease;
 }
 
@@ -317,7 +316,7 @@ h2 {
         margin-right: 0;
     }
     #screen-content.shifted {
-        margin-right: 10em;
+        margin-right: 9em;
         transition: margin-right 0.3s ease;
     }
 

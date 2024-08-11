@@ -674,7 +674,7 @@ h2 {
   background-color: #000;
   position: absolute;
   inset: 0;
-  overflow: hidden auto;
+  overflow-x: hidden;
 }
 
 #admin-nav {
@@ -697,7 +697,7 @@ h2 {
 }
 
 #screen-content.shifted {
-  margin-right: 10em;
+  margin-right: 9em;
   transition: margin-right .3s;
 }
 
@@ -966,7 +966,7 @@ h2 {
   }
 
   #screen-content.shifted {
-    margin-right: 10em;
+    margin-right: 9em;
     transition: margin-right .3s;
   }
 
