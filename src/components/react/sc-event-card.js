@@ -36,8 +36,8 @@ const eventCard = ({ events }) => {
                                     {event.eventdescription}
                                 </Typography>
                                 <Typography className="event-times">
-                                    {event.eventoperationdatetimestart}<br></br>
-                                    {event.eventoperationdatetimeend}
+                                    {event.eventsaturdaytime}<br></br>
+                                    {event.eventsundaytime}
                                 </Typography>
                                 <Typography className="hidden">
                                     {event.eventstallnumber}

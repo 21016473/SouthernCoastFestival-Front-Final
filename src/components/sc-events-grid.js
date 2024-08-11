@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardMedia, Typography, Box, IconButton, Grid, Skeleton, Tooltip, useMediaQuery, ListItem, ListItemButton, Select, MenuItem } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faB, faBowlFood, faLightbulb, faShop } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faBowlFood, faLightbulb, faShop } from '@fortawesome/free-solid-svg-icons'
 
-import placeholderImg from '../../static/images/chef-bryan-entertainment.jpg'
+import placeholderImg from '../../static/images/alisa-music-entertainment.jpg'
 import '../scss/react.scss'
 
-// import hardcoded event data
-import eventData from '../eventdata'
+// import Event
+import Event from '../Event'
 
 
 const EventContainer = () => {
@@ -20,8 +20,14 @@ const EventContainer = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
-        const fetchEvents = () => {
-            setEvents(eventData)
+        const fetchEvents = async () => {
+            try {
+                const eventsData = await Event.getEvents()
+                setEvents(eventsData)
+                console.log('Fetched events:', eventsData)
+            } catch (err) {
+                console.error('Failed to fetch events:', err)
+            }
         }
         fetchEvents()
     }, [])
@@ -63,11 +69,35 @@ const EventContainer = () => {
     }
 
     const categories = [
-        { name: 'All', icon: '', label: 'All'},
+        { name: 'All', icon: faCircle, label: 'All'},
         { name: 'Food', icon: faBowlFood, label: 'Eat + Drink'},
         { name: 'Entertainment', icon: faLightbulb, label: 'Entertainment'},
         { name: 'Shop', icon: faShop, label: 'Shop'}
     ]
+
+    const tags = [
+        { value: 'all', label: 'All', categories: ['All', 'Food', 'Entertainment', 'Shop'] },
+        { value: 'Family Friendly', label: 'Family Friendly', categories: ['All', 'Entertainment', 'Shop'] },
+        { value: '18+ Adults Only', label: '18+ Adults Only', categories: ['All', 'Entertainment', 'Shop'] },
+        { value: 'For Children', label: 'For Children', categories: ['All', 'Entertainment', 'Shop'] },
+        { value: 'Light Show', label: 'Light Show', categories: ['Entertainment', 'Shop'] },
+        { value: 'Music', label: 'Music', categories: ['Entertainment', 'Shop'] },
+        { value: 'Art & Crafts', label: 'Art & Crafts', categories: ['Entertainment', 'Shop'] },
+        { value: 'Fireworks', label: 'Fireworks', categories: ['Entertainment', 'Shop'] },
+        { value: 'Performance', label: 'Performance', categories: ['Entertainment', 'Shop'] },
+        { value: 'Jewelry', label: 'Jewelry', categories: ['Shop'] },
+        { value: 'Food', label: 'Food', categories: ['Food'] },
+        { value: 'Drink', label: 'Drink', categories: ['Food'] },
+        { value: 'Vegan', label: 'Vegan', categories: ['Food'] },
+        { value: 'Vegetarian', label: 'Vegetarian', categories: ['Food'] },
+        { value: 'Alcoholic', label: 'Alcoholic', categories: ['Food'] },
+        { value: 'Gluten Free', label: 'Gluten Free', categories: ['Food'] },
+        { value: 'Nut Free', label: 'Nut Free', categories: ['Food'] },
+        { value: 'Dairy Free', label: 'Dairy Free', categories: ['Food'] },    
+        { value: 'favourites', label: 'Favourites', categories: ['All'], icon: 'favorite_border' }
+    ]
+
+    const filteredTags = tags.filter(tag => tag.categories.includes(selectedCategory) || selectedCategory === 'All')
 
     return (
         <>
@@ -77,12 +107,7 @@ const EventContainer = () => {
                         <Select
                             value={selectedCategory}
                             onChange={(e) => handleCategoryChange(e.target.value)}
-                            sx={{ 
-                                color: '#FFFFFF', 
-                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    border: '0.1em solid #FFC600'
-                                },
-                            }}
+                            sx={{ color: '#FFFFFF' }}
                             MenuProps={{
                                 PaperProps: {
                                     sx: {
@@ -94,11 +119,11 @@ const EventContainer = () => {
                                             fontSize: '1em',
                                             padding: '1em',
                                             border: 'none',
-                                            width: '90%'
+                                            width: '50vw'
                                         }
                                     }
                                 }
-                            }}  
+                            }} 
                         >
                             {categories.map((category) => (
                                 <MenuItem key={category.name} value={category.name}>
@@ -122,18 +147,15 @@ const EventContainer = () => {
             </div>
 
             <div id="tag-container">
-                <button className={`tag-button ${selectedTag === 'all' ? 'active' : ''}`} onClick={() => handleTagChange('all')}>All</button>
-                <button className={`tag-button ${selectedTag === 'drink' ? 'active' : ''}`} onClick={() => handleTagChange('drink')}>Drinks</button>
-                <button className={`tag-button ${selectedTag === 'food' ? 'active' : ''}`} onClick={() => handleTagChange('food')}>Food</button>
-                <button className={`tag-button ${selectedTag === 'alcoholic' ? 'active' : ''}`} onClick={() => handleTagChange('alcoholic')}>Alcholic</button>
-                <button className={`tag-button ${selectedTag === 'gluten-free' ? 'active' : ''}`} onClick={() => handleTagChange('gluten-free')}>Gluten Free</button>
-                <button className={`tag-button ${selectedTag === 'nut-free' ? 'active' : ''}`} onClick={() => handleTagChange('nut-free')}>Nut Free</button>
-                <button className={`tag-button ${selectedTag === 'gourmet' ? 'active' : ''}`} onClick={() => handleTagChange('gourmet')}>Gourmet</button>
-                <button className={`tag-button ${selectedTag === 'vegan' ? 'active' : ''}`} onClick={() => handleTagChange('vegan')}>Vegan</button>
-                <button className={`tag-button ${selectedTag === 'favourites' ? 'active' : ''}`} onClick={() => handleTagChange('favourites')}>
-                    <span className="material-icons">favorite_border</span>
-                    Favourites
-                </button>
+                {filteredTags.map((tag) => (
+                    <button
+                        key={tag.value}
+                        className={`tag-button ${selectedTag === tag.value ? 'active' : ''}`}
+                        onClick={() => handleTagChange(tag.value)}
+                    >
+                        {tag.label}
+                    </button>
+                ))}
                 <p className="message">Showing all {filteredEvents.length} items</p>
             </div>
 
@@ -160,7 +182,7 @@ const EventContainer = () => {
             ) : (
                 <Grid container spacing={3} className="card-grid">
                     {filteredEvents.map(event => {
-                        const imageUrl = event.eventimage || placeholderImg;
+                        const imageUrl = event.eventimage ? `https://southerncostfestival-backend-a3.onrender.com/images/${event.eventimage}` : placeholderImg
 
                         return (
                             <Grid item xs={12} sm={6} md={4} lg={3} key={event._id}>
@@ -168,7 +190,6 @@ const EventContainer = () => {
                                     <CardContent className="event-content">
                                         <CardMedia
                                             component="img"
-                                            loading="lazy"
                                             alt="placeholder"
                                             height="150"
                                             image={imageUrl}
@@ -195,8 +216,8 @@ const EventContainer = () => {
                                             {event.eventdescription}
                                         </Typography>
                                         <Typography className="event-times">
-                                            {event.eventoperationdatetimestart}<br></br>
-                                            {event.eventoperationdatetimeend}
+                                            {event.eventsaturdaytime}<br></br>
+                                            {event.eventsundaytime}
                                         </Typography>
                                         <Typography className="hidden">
                                             {event.eventstallnumber}

@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { Drawer, List, ListItem, ListItemText, Typography, Tooltip } from '@mui/material'
 import Auth from '../Auth'
 import '../scss/react.scss'
+import NewEventDialog from './react/sc-new-event'
 
 export default function MUIDrawer() {
     const [isAdmin, setIsAdmin] = useState(Auth.currentUser.accessLevel === 'admin')
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    // set user access level to admin 
     useEffect(() => {
         setIsAdmin(Auth.currentUser.accessLevel === 'admin')
     }, [Auth.currentUser.accessLevel])
 
     const menuItems = [
-        { text: 'Manage Events', disabled: true, tooltip: 'Feature coming soon', className: 'disabled'}, 
-        { text: 'Manage Users', disabled: true, tooltip: 'Feature coming soon', className: 'disabled'}, 
-        { text: 'Log Out', diabled: false, tooltip: '', className: '' }
+        { text: 'New Event' },
+        { text: 'Manage Events', disabled: false, tooltip: '', className: '' },  // Enable Manage Events
+        { text: 'Manage Users', disabled: true, tooltip: 'Feature coming soon', className: 'disabled' },
+        { text: 'Log Out', disabled: false, tooltip: '', className: '' }
     ]
 
     const handleLogout = () => {
@@ -23,14 +25,26 @@ export default function MUIDrawer() {
         console.log('user logged out')
     }
 
-    if(!isAdmin) {
+    const handleMenuItemClick = (text) => {
+        if (text === 'New Event') {
+            setIsDialogOpen(true)
+        } else if (text === 'Log Out') {
+            handleLogout()
+        }
+    }
+
+    const handleCloseDialog = () => {
+        setIsDialogOpen(false)
+    }
+
+    if (!isAdmin) {
         return null
     }
 
     return (
         <div>
-            <Drawer 
-                anchor="right" 
+            <Drawer
+                anchor="right"
                 variant="permanent"
                 sx={{
                     '& .MuiDrawer-paper': {
@@ -44,10 +58,10 @@ export default function MUIDrawer() {
                 <Typography className="admin-text">Name</Typography>
                 <Typography className="admin-text">Editor</Typography>
                 <List sx={{ color: '#FFF' }}>
-                    {menuItems.map(( {text, disabled, tooltip}, index) => (
-                        <Tooltip title={tooltip} key={text} placement="left">
+                    {menuItems.map(({ text }) => (
+                        <Tooltip title={text} key={text} placement="left">
                             <span>
-                                <ListItem button key={text} onClick={text === 'Log Out' ? handleLogout : null} disabled={disabled}>
+                                <ListItem button key={text} onClick={() => handleMenuItemClick(text)}>
                                     <ListItemText primary={text} />
                                 </ListItem>
                             </span>
@@ -55,6 +69,8 @@ export default function MUIDrawer() {
                     ))}
                 </List>
             </Drawer>
+
+            <NewEventDialog open={isDialogOpen} onClose={handleCloseDialog}></NewEventDialog>
         </div>
     )
 }

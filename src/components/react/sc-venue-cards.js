@@ -72,8 +72,11 @@ const venueCards = () => {
                     sx={{
                         overflowX: isSmallScreen ? 'auto' : 'visible',
                         display: 'flex',
-                        flexDirection: isSmallScreen ? 'row' : 'column',
-                        whiteSpace: 'nowrap'
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        whiteSpace: 'nowrap',
+                        justifyContent: 'center',
+                        marginBottom: '1em'
                     }}
                 >
                     {sections.map((section) => (
