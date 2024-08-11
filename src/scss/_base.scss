@@ -282,6 +282,12 @@ html {
     }
 }
 
+// MANAGE EVENTS -----------------------------------------
+.admin-content {
+    min-height: calc(100vh - 80px);
+    border-bottom: 0.2em solid #FFC600;
+}
+
 // RESPONSIVE - TABLET --------------------------------------------
 @media all and (max-width: 768px) {
     .hero-banner { 

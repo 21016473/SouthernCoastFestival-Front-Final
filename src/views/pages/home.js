@@ -2,23 +2,30 @@ import App from '../../App'
 import { html, render } from 'lit-html'
 import Utils from '../../Utils'
 import Auth from '../../Auth.js'
+
 import { renderReactComponent } from '../../components/react/reactHelper'
 import EventContainer from '../../components/sc-events-grid.js'
 import ContactForm from '../../components/react/sc-contact-form.js'
 import VenueCard from '../../components/react/sc-venue-cards.js'
 import AdminNav from '../../components/sc-admin-nav.js'
+import VideoControlButton from '../../components/react/icons/sc-video-control.js'
+import ManageEventsContainer from '../../components/react/sc-manage-events.js'
 
 class HomeView {
   constructor() {
+    this.state = {
+      isPlaying: true,
+      isPageContentVisible: true,
+    }
 
+    this.togglePageContentVisibility = this.togglePageContentVisibility.bind(this)
   }
 
   async init() {
     console.log('HomeView.init')
     console.log(Auth.currentUser)
-    document.title = 'Home'   
-    
-    // await this.getEvents() // only use when front and back are talking
+    document.title = 'Southern Coast Festival of Lights'
+
     this.render()
     Utils.pageIntroAnim()
 
@@ -37,22 +44,38 @@ class HomeView {
     return new URL('../../../static/images/hero-light.mp4', import.meta.url).toString()
   }
 
-  toggleVideoPlayback() {
+  toggleVideoPlayback = () => {
     const video = document.querySelector('.hero-video')
-    const controlButton = document.querySelector('.video-control i')
     if (video.paused) {
       video.play()
-      controlButton.classList.remove('fa-play')
-      controlButton.classList.add('fa-pause')
+      this.updateState({ isPlaying: true })
     } else {
       video.pause()
-      controlButton.classList.remove('fa-pause')
-      controlButton.classList.add('fa-play')
+      this.updateState({ isPlaying: false })
+    }
+  }
+
+  togglePageContentVisibility() {
+    this.updateState({ isPageContentVisible: !this.state.isPageContentVisible })
+  }
+
+  updateState(newState) {
+    this.state = { ...this.state, ...newState }
+    this.render()
+  }
+
+  renderVideoControlButton() {
+    const videoControlButtonContainer = document.getElementById('video-control-button')
+    if (videoControlButtonContainer) {
+      renderReactComponent(() => (
+        <VideoControlButton isPlaying={this.state.isPlaying} onClick={this.toggleVideoPlayback} />
+      ), videoControlButtonContainer)
     }
   }
 
   render() {
     const videoUrl = this.getVideoUrl()
+    const pageContentDisplayStyle = this.state.isPageContentVisible ? 'block' : 'none'
 
     const template = html`
       <div id="screen-content" class="${(Auth.currentUser.accessLevel) === 'admin' ? 'shifted' : ''}">
@@ -63,9 +86,7 @@ class HomeView {
         `}
 
         <sc-app-header></sc-app-header>
-
-        <div class="page-content">        
-        
+        <div class="page-content" style="display: ${pageContentDisplayStyle};">
           <!--HERO-->
           <div id="home">
             <div class="hero-banner">
@@ -86,8 +107,6 @@ class HomeView {
           </div>
 
           <!--EVENTS-->
-          <!-- use react grid to create events layout -->
-
           <div id="events">
             <div id="filter-container"></div>
           </div>
@@ -113,7 +132,6 @@ class HomeView {
             </div>
           </div>
         </div>
-
         <sc-app-footer></sc-app-footer>
       </div>
     `
@@ -132,6 +150,8 @@ class HomeView {
 
     const contactFormContainer = document.getElementById('contact-form')
     renderReactComponent(ContactForm, contactFormContainer)
+
+    this.renderVideoControlButton()
   }
 }
 

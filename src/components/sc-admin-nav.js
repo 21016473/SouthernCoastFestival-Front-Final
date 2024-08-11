@@ -13,9 +13,10 @@ export default function MUIDrawer() {
     }, [Auth.currentUser.accessLevel])
 
     const menuItems = [
-        { text: 'Manage Events' }, 
-        { text: 'Manage Users' }, 
-        { text: 'Log Out' }
+        { text: 'New Event' },
+        { text: 'Manage Events', disabled: false, tooltip: '', className: '' },  // Enable Manage Events
+        { text: 'Manage Users', disabled: true, tooltip: 'Feature coming soon', className: 'disabled' },
+        { text: 'Log Out', disabled: false, tooltip: '', className: '' }
     ]
 
     const handleLogout = () => {
@@ -25,7 +26,7 @@ export default function MUIDrawer() {
     }
 
     const handleMenuItemClick = (text) => {
-        if (text === 'Manage Events') {
+        if (text === 'New Event') {
             setIsDialogOpen(true)
         } else if (text === 'Log Out') {
             handleLogout()
@@ -42,8 +43,8 @@ export default function MUIDrawer() {
 
     return (
         <div>
-            <Drawer 
-                anchor="right" 
+            <Drawer
+                anchor="right"
                 variant="permanent"
                 sx={{
                     '& .MuiDrawer-paper': {
@@ -68,6 +69,7 @@ export default function MUIDrawer() {
                     ))}
                 </List>
             </Drawer>
+
             <NewEventDialog open={isDialogOpen} onClose={handleCloseDialog}></NewEventDialog>
         </div>
     )

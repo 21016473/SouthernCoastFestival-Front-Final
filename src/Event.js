@@ -8,30 +8,11 @@ class Event {
         this.currentUser = {}
     }
 
-    async fetchImage() {
-        const response = await fetch({
-            method: "PUT",
-            headers: {
-                "Content-Type": "multipart/form-data"
-            },
-            body: JSON.stringify(file)
-        })
-
-        if(!response.ok) {
-            const err = await response.json()
-            if(err) console.log(err)
-        } else {
-            console.log('image fetched')
-        }
-    }
-
     async newEvent(data) {
         // post request
         const response = await fetch(`${App.apiBase}/events`, {
             method: 'POST',
-            headers: { 
-                "Authorization": `Bearer ${localStorage.accessToken}`,
-            },
+            headers: { "Authorization": `Bearer ${localStorage.accessToken}` },
             body: data
         })
 
@@ -40,8 +21,8 @@ class Event {
             // console log error
             const err = await response.json()
             if(err) console.log(err)
-            // run fail() function if set
-            if(typeof fail == 'function') fail()
+            // run fail()
+        if(typeof fail == 'function') fail()
         } else {
             gotoRoute('/')
         }
@@ -50,7 +31,8 @@ class Event {
     async getEvents() {
         // fetch json data
         const response = await fetch(`${App.apiBase}/events`, {
-            method: 'GET'
+            method: 'GET',
+            headers: { "Authorization": `Bearer ${localStorage.accessToken}`}
         })
 
         // if response not ok

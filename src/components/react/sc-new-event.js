@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Typography, TextField, Stack, Button, Snackbar, MenuItem, Checkbox, Select, Dialog, DialogTitle, DialogContent, DialogActions, FormControl, FormControlLabel, Grid, OutlinedInput, InputLabel} from '@mui/material'
+import { Box, Typography, TextField, Stack, Button, Snackbar, MenuItem, Checkbox, Select, Dialog, DialogTitle, DialogContent, DialogActions, FormControl, FormControlLabel, Grid, OutlinedInput, InputLabel } from '@mui/material'
 import '../../scss/react.scss'
 import Event from '../../Event'
 
@@ -29,9 +29,11 @@ const NewPostForm = ({ open, onClose }) => {
 
         if (type === 'checkbox') {
             setFormData(prevState => {
-                const tags = prevState.eventtag
+                const tags = [...prevState.eventtag]
                 if (checked) {
-                    tags.push(value)
+                    if (!tags.includes(value)) {
+                        tags.push(value)
+                    }
                 } else {
                     const index = tags.indexOf(value)
                     if (index > -1) {
@@ -59,8 +61,7 @@ const NewPostForm = ({ open, onClose }) => {
         })
         const reader = new FileReader()
         reader.onloadend = () => {
-            const imageUrl = `/images/${file.name}`
-            setImagePreview(imageUrl)
+            setImagePreview(reader.result)
         }
         reader.readAsDataURL(file)
     }
@@ -68,6 +69,10 @@ const NewPostForm = ({ open, onClose }) => {
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return re.test(email)
+    }
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false)
     }
 
     const handleSubmit = async (e) => {
@@ -88,14 +93,17 @@ const NewPostForm = ({ open, onClose }) => {
 
         const data = new FormData()
         for (const key in formData) {
-            data.append(key, formData[key])
+            if (Array.isArray(formData[key])) {
+                data.append(key, JSON.stringify(formData[key]))
+            } else {
+                data.append(key, formData[key])
+            }
         }
 
         try {
             await Event.newEvent(data)
-            setSnackbarMessage('Event created')
+            setSnackbarMessage('Event created successfully')
             setSnackbarOpen(true)
-            setImagePreview(response.data.imageUrl)
             onClose()
             console.log(data)
         } catch (error) {
@@ -112,11 +120,11 @@ const NewPostForm = ({ open, onClose }) => {
                     <form onSubmit={handleSubmit}>
                         <Box className="form-content">
                             <Stack>
-                                <TextField variant="outlined" label="Event Name" className="form-text" size="small" name="eventdisplayname" value={formData.eventdisplayname} onChange={handleChange}></TextField>
+                                <TextField variant="outlined" label="Event Name" className="form-text" size="small" name="eventdisplayname" value={formData.eventdisplayname} onChange={handleChange} required></TextField>
                                 <Stack direction="row" className="vendor-details">
-                                    <TextField variant="outlined" label="Vendor Name" className="form-text" size="small" name="vendorcontactname" value={formData.vendorcontactname} onChange={handleChange}></TextField>
-                                    <TextField variant="outlined" label="Vendor Email" className="form-text" size="small" name="vendorcontactemail" value={formData.vendorcontactemail} onChange={handleChange}></TextField>
-                                    <TextField variant="outlined" label="Vendor Phone Number" className="form-text" size="small" name="vendorcontactphone" value={formData.vendorcontactphone} onChange={handleChange}></TextField>
+                                    <TextField variant="outlined" label="Vendor Name" className="form-text" size="small" name="vendorcontactname" value={formData.vendorcontactname} onChange={handleChange} required></TextField>
+                                    <TextField variant="outlined" label="Vendor Email" className="form-text" size="small" name="vendorcontactemail" value={formData.vendorcontactemail} onChange={handleChange} required></TextField>
+                                    <TextField variant="outlined" label="Vendor Phone Number" className="form-text" size="small" name="vendorcontactphone" value={formData.vendorcontactphone} onChange={handleChange} required></TextField>
                                 </Stack>
                                 <Stack direction="row" className="image-input">
                                     {imagePreview && (
@@ -126,7 +134,7 @@ const NewPostForm = ({ open, onClose }) => {
                                     )}
                                     <Button variant="outlined" component="label" className="upload-image">
                                         Upload Image
-                                        <input type="file" hidden name="eventimage" onChange={handleImageChange} />
+                                        <input type="file" hidden name="eventimage" onChange={handleImageChange} required/>
                                     </Button>
                                 </Stack>
                                 <FormControl>
@@ -145,9 +153,26 @@ const NewPostForm = ({ open, onClose }) => {
                                             return selected
                                         }}
                                         inputProps={{ 'aria-label': 'Without label' }}
+                                        MenuProps={{
+                                            PaperProps: {
+                                                sx: {
+                                                    backgroundColor: '#FFFFFF',
+                                                    '& .MuiList-root.MuiMenu-list': {
+                                                        backgroundColor: '#FFFFFF',
+                                                        color: '#000000',
+                                                        fontFamily: 'var(--base-font-family)',
+                                                        fontSize: '1em',
+                                                        padding: '1em',
+                                                        border: 'none',
+                                                        width: '90%'
+                                                    }
+                                                }
+                                            }
+                                        }}
+                                        required
                                     >
                                         <MenuItem disabled value=""><em>None</em></MenuItem>
-                                        <MenuItem value="Food + Drink">Food + Drink</MenuItem>
+                                        <MenuItem value="Eat + Drink">Eat + Drink</MenuItem>
                                         <MenuItem value="Entertainment">Entertainment</MenuItem>
                                         <MenuItem value="Shop">Shop</MenuItem>
                                     </Select>
@@ -219,18 +244,18 @@ const NewPostForm = ({ open, onClose }) => {
                                     <Stack className="time-col">
                                         <Typography>Saturday</Typography>
                                         <TextField 
-                                            variant="outlined" className="form-text" size="small" name="eventsaturdaytime" value={formData.eventsaturdaytime} onChange={handleChange} InputLabelProps={{ shrink: true }}
+                                            variant="outlined" className="form-text" size="small" name="eventsaturdaytime" value={formData.eventsaturdaytime} onChange={handleChange} InputLabelProps={{ shrink: true }} required
                                         />
                                     </Stack>
                                     <Stack className="time-col">
                                         <Typography>Sunday</Typography>
                                         <TextField 
-                                            variant="outlined" className="form-text" size="small" name="eventsundaytime" value={formData.eventsundaytime} onChange={handleChange} InputLabelProps={{ shrink: true }}
+                                            variant="outlined" className="form-text" size="small" name="eventsundaytime" value={formData.eventsundaytime} onChange={handleChange} InputLabelProps={{ shrink: true }} required
                                         />
                                     </Stack>
                                 </Grid>
-                                <TextField variant="outlined" label="Add description" className="form-text" size="small" multiline rows={4} name="eventdescription" value={formData.eventdescription} onChange={handleChange}></TextField>
-                                <TextField variant="outlined" label="Allocate stall number" className="form-text" size="small" name="eventstallnumber" value={formData.eventstallnumber} onChange={handleChange}></TextField>
+                                <TextField variant="outlined" label="Add description" className="form-text" size="small" multiline rows={4} name="eventdescription" value={formData.eventdescription} onChange={handleChange} required></TextField>
+                                <TextField variant="outlined" label="Allocate stall number" className="form-text" size="small" name="eventstallnumber" value={formData.eventstallnumber} onChange={handleChange} required></TextField>
                                 <Stack direction="row" spacing={2} justifyContent="flex-end">
                                     <Button onClick={onClose} variant="outlined" color="secondary" className="event-button">Cancel</Button>
                                     <Button type="submit" variant="contained" color="primary" className="event-button">Submit</Button>
@@ -244,4 +269,4 @@ const NewPostForm = ({ open, onClose }) => {
     )
 }
 
-export default NewPostForm;
+export default NewPostForm
