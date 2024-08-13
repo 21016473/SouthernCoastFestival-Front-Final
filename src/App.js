@@ -1,7 +1,6 @@
 import Router from './Router'
 import Auth from './Auth'
 import Toast from './Toast'
-import User from './User'
 
 class App {
     constructor() {
@@ -17,11 +16,8 @@ class App {
         // toast init
         Toast.init()
 
-        // auth check
-        Auth.check(() => {
-            // authenticated
-            Router.init()
-        })
+        // authenticated
+        Router.init()
     }
 }
 
