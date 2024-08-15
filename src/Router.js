@@ -1,10 +1,12 @@
 // import views
 import homeView from './views/pages/home'
 import errorView from './views/pages/404'
+import otherView from './views/pages/other'
 
 // define routes
 const routes = {
     '/': homeView,
+    '/other': otherView,
     '404': errorView,
 }
 

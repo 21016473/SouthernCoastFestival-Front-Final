@@ -18,10 +18,8 @@ class App {
         Toast.init()
 
         // auth check
-        Auth.check(() => {
             // authenticated
-            Router.init()
-        })
+        Router.init()
     }
 }
 
