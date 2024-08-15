@@ -25,6 +25,52 @@ class AppHeader extends LitElement {
         this.scrollTo();
         this.renderReactComponent();
         this.toTop();
+        this.observeElementsInView();
+    }
+
+
+    observeElementsInView() {
+        const elements = [
+            { id: 'home', callback: () => this.handleElementInView('home') },
+            { id: 'events', callback: () => this.handleElementInView('events') },
+            { id: 'venue', callback: () => this.handleElementInView('venue') },
+            { id: 'about', callback: () => this.handleElementInView('about')}
+        ];
+
+        const observerOptions = {
+            root: null, // Use the viewport as the root
+            rootMargin: '-50% 0px', // Offset the bounding box by half the viewport height
+            threshold: 0 // Trigger as soon as any part of the element is visible within the adjusted bounding box
+        };
+    
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = elements.find(el => el.id === entry.target.id);
+                    if (element && element.callback) {
+                        element.callback(entry.target.id);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        elements.forEach(element => {
+            const targetElement = document.getElementById(element.id);
+            if (targetElement) {
+                observer.observe(targetElement);
+            }
+        });
+    }
+
+    handleElementInView(element) {
+        console.log(`Element ${element} is in view!`);
+        // Add your event handling logic for element 1 here
+        const link = this.shadowRoot.querySelector(`#${element}-link`);
+        if (link) {
+            const links = this.shadowRoot.querySelectorAll('.nav-item');
+            links.forEach(link => link.classList.remove('active'));
+            link.classList.add('active');
+        }
     }
 
     // set property of link as active when clicked
@@ -201,10 +247,10 @@ class AppHeader extends LitElement {
 
                 <nav class="app-header-nav">
                     <ul>
-                        <li><a class="nav-item active" href="#home">Home</a></li> 
-                        <li><a class="nav-item" href="#events">Events</a></li>
-                        <li><a class="nav-item" href="#venue">Venue</a></li>
-                        <li><a class="nav-item" href="#about">About</a></li>
+                        <li><a class="nav-item active" href="#home" id="home-link">Home</a></li> 
+                        <li><a class="nav-item" href="#events" id="events-link">Events</a></li>
+                        <li><a class="nav-item" href="#venue" id="venue-link">Venue</a></li>
+                        <li><a class="nav-item" href="#about" id="about-link">About</a></li>
                     </ul>
                 </nav>
             </header>
