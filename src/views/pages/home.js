@@ -138,9 +138,7 @@ class HomeView {
     render(template, App.rootEl)
 
     const adminNavContainer = document.getElementById('admin-nav')
-    if (adminNavContainer) {
-      renderReactComponent(AdminNav, adminNavContainer)
-    }
+    renderReactComponent(AdminNav, adminNavContainer)
 
     const filterContainer = document.getElementById('filter-container')
     renderReactComponent(EventContainer, filterContainer)

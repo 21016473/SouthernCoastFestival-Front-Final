@@ -45,18 +45,14 @@ class Auth {
     }
 
     // async check
-    async check(success) {
-        // show splash screen while loading
-        render(splash, App.rootEl)
-
-        // check loacl token exists
-        if(!localStorage.accessToken) {
-            // no local token
-            // redirect
-            gotoRoute('/')
-            return
+    async check(complete) {
+        if (!localStorage.getItem('accessToken')) {
+          this.currentUser = {
+            accessLevel: 'user'
+          }
+          return complete()
         }
-
+      
         // validate token via the backend
         const response = await fetch(`${App.apiBase}/auth/validate`, {
             method: 'GET',
@@ -73,20 +69,18 @@ class Auth {
             // delete local token
             localStorage.removeItem('accessToken')
             Toast.show("session expired, please sign in")
-            // redirect to sign in
-            gotoRoute('/')
-            return
-        }
-
-        // token is valid
-        const data = await response.json()
-        // set currentUser obj
-        this.currentUser = {
-          ...data.user,
-          accessLevel: data.user.accessLevel || 'user'
+        } else {
+          // token is valid
+          const data = await response.json()
+          // set currentUser obj
+          this.currentUser = {
+            ...data.user,
+            accessLevel: data.user.accessLevel || 'user'
+          }
+          console.log(data.user.accessLevel)
         }
         // run success
-        success()
+        complete()
     }
 
     // async sign out

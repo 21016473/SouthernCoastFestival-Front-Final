@@ -1,6 +1,9 @@
 import App from '../../App'
 import { html, render } from 'lit-html'
 import Auth from '../../Auth.js'
+import { renderReactComponent } from '../../components/react/reactHelper'
+import AdminNav from '../../components/sc-admin-nav.js'
+import { gotoRoute } from '../../Router.js'
 
 
 class OtherView {
@@ -9,8 +12,12 @@ class OtherView {
 
   async init() {
     document.title = 'Southern Coast Festival of Lights'
-
-    this.render()
+    Auth.check(() => {})
+    if (Auth.currentUser.accessLevel === 'admin') {
+      this.render()
+    } else {
+      gotoRoute('/')
+    }
   }
 
   render() {
@@ -37,6 +44,9 @@ class OtherView {
       </div>
     `
     render(template, App.rootEl)
+
+    const adminNavContainer = document.getElementById('admin-nav')
+    renderReactComponent(AdminNav, adminNavContainer)
   }
 }
 
