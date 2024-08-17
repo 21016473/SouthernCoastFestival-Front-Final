@@ -122,7 +122,7 @@ const venueCards = () => {
                 <Box id="location" sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Stack>
                         <Typography className="subtitle">
-                            <FontAwesomeIcon icon={faLocationDot} /> Location
+                            Location
                         </Typography>
                         <Typography className="paragraph">Rippleside Park, Bell Parade Geelong, Victoria, Australia</Typography>
                         <Box className="google-map">
@@ -148,7 +148,7 @@ const venueCards = () => {
                     <Typography className="paragraph">We are committed to providing an accommodating experience for all our guests. If you have any specific requirements, don't hesitate to contact us.</Typography>
                     <Stack className="info">
                         <Typography className="bold">Parking:</Typography>
-                        <Typography className="paragraph">Designated infoarking spots are located close to the entrance for guests with mobility needs. Display the appropriate permits.</Typography>
+                        <Typography className="paragraph">Designated parking spots are located close to the entrance for guests with mobility needs. Display the appropriate permits.</Typography>
                     </Stack>
                     <Stack className="info">
                         <Typography className="bold">Pathways:</Typography>
@@ -156,7 +156,7 @@ const venueCards = () => {
                     </Stack>
                     <Stack className="info">
                         <Typography className="bold">Restrooms:</Typography>
-                        <Typography className="paragraph">Wheelchair-infoestrooms are available throughout the event site.</Typography>
+                        <Typography className="paragraph">Wheelchair-restrooms are available throughout the event site.</Typography>
                     </Stack>
                     <Stack className="info">
                         <Typography className="bold">Viewing:</Typography>
@@ -188,7 +188,7 @@ const venueCards = () => {
             {activeSection === 'transport' && (
                 <Box id="transport">
                     <Typography className="subtitle">Transport</Typography>
-                    <Typography className="paragraph">For convenient access to the light festival, many parking spots are available nearby. Alternatively, infoublic transport is easy with frequent bus services and a nearby train station.</Typography>
+                    <Typography className="paragraph">For convenient access to the light festival, many parking spots are available nearby. Alternatively, public transport is easy with frequent bus services and a nearby train station.</Typography>
                     <Typography className="paragraph">Follow signs for designated parking areas or plan your journey using public transport options for a hassle-free visit to this event.</Typography>
                 </Box>
             )}

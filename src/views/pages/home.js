@@ -122,17 +122,19 @@ class HomeView {
                 <p>Transforming the city of Geelong into a luminous wonderland with art installations, dazzling displays, vibrant projections, and fireworks.</p>
                 <p>Celebrate creativity and community spirit as local artists, alongside talented performers, showcase their artistry.</p>
                 <p>Explore local shops offering unique wares, and savour delicious food from diverse local vendors, with moments that captivate all who attend.</p>
-                <h2>Festival Dates</h2>
-                <p>Saturday to Sunday, 24th to 25th of August, 2024</p>
-                <h2>Hours of Operation</h2>
-                <p>Saturday — 12:00PM to Midnight</p>
-                <p>Sunday — 11:00AM to 10:00PM</p>
+                <h2>Dates and opening hours</h2>
+                <ul>
+                  <li>Saturday, 24 August 2024 noon to midnight</li>
+                  <li>Sunday,25 August 2024 11am to 10pm</li>
+                </ul>
               </div>
               <div id="contact-form"></div>
             </div>
+                        <div id="footer-container">
+              <sc-app-footer></sc-app-footer>
+            </div>
           </div>
         </div>
-        <sc-app-footer></sc-app-footer>
       </div>
     `
     render(template, App.rootEl)

@@ -204,7 +204,6 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 70vw;
     margin: auto;
 
     #location, #map, #accessibility, #parking, #transport {
@@ -278,7 +277,6 @@ h2 {
 // ABOUT ---------------------------
 #about {
     min-height: calc(100vh - 80px);
-    border-bottom: 0.2em solid #FFC600;
     scroll-margin-top: 80px; // Compensate for the sticky nav 
 }
 .about-container {
@@ -296,9 +294,27 @@ h2 {
 #contact-form {
     margin-top: 5em;
 }
+//----FOOTER CONTAINER
+#footer-container{
+    border-top: 0.2em solid #FFC600;
+}
 
 // RESPONSIVE - TABLET --------------------------------------------
 @media all and (max-width: 768px) {
+    .hero-banner #hero-content{
+        width: 90vw;
+        padding: 1.5em; 
+        margin-bottom: 0;  
+        h1 {
+            font-size: 1.4em;
+        }
+        h3 {
+            font-size:1em;
+        }
+        p {
+            font-size:0.8em;
+        }
+    }
     #admin-nav {
         position: fixed;
         top: 0;
@@ -332,16 +348,19 @@ h2 {
         }
     }
     #events {
-        width: 70vw;
+        width: 90vw;
         margin: auto;
     }
+    #filter-container, #tag-container, #category-container{
+        width: 90vw;
+    }
     #venue, .venue-container #location, .venue-container #map {
-        width: 70vw;
+        width: 90vw;
         margin: auto;
     }
     .venue-container {
         #location, #map, #accessibility, #parking, #transport {
-            width: 70vw;
+            width: 90vw;
             margin: auto;
         }
     }
@@ -350,13 +369,13 @@ h2 {
         flex-direction: column;
         justify-content: space-between;
         .google-map {
-            height: 300px;
+            height: 100%;
         }
     }
     .about-container {
         grid-template-rows: 1fr auto;
         grid-template-columns: auto;
-        width: 70vw;
+        width: 90vw;
     }
     #about-info {
         padding-right: 0;
@@ -369,12 +388,16 @@ h2 {
 // RESPONSIVE - MOBILE --------------------------------------------
 @media all and (max-width: 400px) {
     #location {
-        width: 95vw;
         .google-map {
-            width: 95vw;
+            width: 100%;
         }
     }
     #map-img {
         height: 250px !important;
     }
+    #filter-container{
+        width: 98vw;
+        margin: auto;
+    }
 }
+

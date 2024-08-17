@@ -61,12 +61,13 @@ class AppFooter extends LitElement {
             <style>
                 .app-footer {
                     height: auto;
-                    width: 100%;
+                    width: 70wv;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
                     padding-bottom: 1em;
+                    margin: 0 auto;
                 }
 
                 .app-footer-left {
@@ -111,6 +112,10 @@ class AppFooter extends LitElement {
                     text-align: center;
                     cursor: pointer;
                 }
+                    @meida all and (max-width: 768px) {
+                    .app-footer {
+                    width: 100%;
+                    }
             </style>
 
             <footer class="app-footer">
