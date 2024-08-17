@@ -249,90 +249,112 @@ box-sizing: border-box;
 }
 
 // ABOUT - CONTACT FORM -----------------------------------------
-.form-container {
+#contact-form {
+    min-width: 25em;
     height: auto;
     background-color: #2b2b2b;
     border-radius: 0.2em;
     padding: 0.5em 1em;
     font-family: var(--base-font-family);
 
-    .form-title {
-        font-size: 1.5em;
-        text-align: center;
-        font-weight: bold;
-    }
-    .form-section {
-        padding: 1em;
-        margin: 0.5em 0;
-        width: auto;
-        border-radius: 0.2em;
+    .MuiTypography-h2 {
+        font-family: var(--base-font-family);
+        color: #FFC600;
+        font-size: 2em;
+        padding-bottom:1em;
+        font-weight: 400;
+      }
+      .MuiTypography-h3 {
+        font-family: var(--base-font-family);
+        color: white;
+        font-size: 1.3em;
+        padding-bottom:1em;
+      }
+      .MuiFormGroup-root{
+        padding-bottom:1em;
+      }
 
-        .form-sub {
-            font-size: 0.9em;
-            margin-bottom: 0.5em;
+    .Mui-focused .MuiOutlinedInput-notchedOutline {
+        border: 2px solid #FFC600 !important;
+        padding: 0 18px;
+     }
+
+     .Mui-focused .MuiInputLabel-outlined {
+        font-style: italic; 
+        font-weight: bold;  
+        color: #FFC600;      
+    }
+
+    .MuiInputLabel-root {
+        &.Mui-focused {
+            font-style: italic;
+            font-weight: bold;
+            color: #FFC600;
+            font-size: 1.6rem;
         }
-        .form-text, .form-enquiry {
-            margin: 0.25em 0;
+    }
+    .MuiOutlinedInput-root {
+        &.Mui-focused .MuiOutlinedInput-notchedOutline {
+            border: 2px solid #FFC600 !important;
+        }
+        input {
+            background-color: white;
             border-radius: 0.2em;
-            font-family: var(--base-font-family);
-            // text-field background
-            .MuiInputBase-root {
-                background-color: #ffffff;
-                margin: 0.1em;
-            }
-            // text-field label colour
-            .MuiInputBase-root, label {
-                color: #000000;
-                font-size: 0.75em;
-            }
-            // text-field outline not focused
-            .MuiOutlinedInput.root .MuiOutlinedInput-notchedOutline {
-                border: 1px solid #000000;
-            }
-            // text-field outline when focused
-            .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-                border: 0.2em solid #FFC600;
-            }
-            // text-field label shrink colour
-            .MuiInputLabel-shrink {
-                color: #FFC600;
-            }
         }
-        .form-checkbox {
-            .MuiCheckbox-root {
-                color: #bdbdbd;
+        fieldset {
+            legend {
+                width: fit-content !important;
+                padding: 0 5px;
+                background-color: white; 
+                transform: translateY(-15px);
             }
-            .MuiCheckbox-root.Mui-checked  {
-                color: #FFC600;
-            }
-            .MuiFormControlLabel-label {
-                font-family: var(--base-font-family);
-                color: #FFFFFF;
-                font-size: 0.75em;
-            }
-            .MuiButtonBase-root.MuiCheckbox-root {
-                padding: 0.3em;
-                margin-left: 0.3em;
-            }
-        }
-        .form-enquiry {
-            width: 100%;
         }
     }
-    .form-controls {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
+    .MuiCheckbox-root {
+        color: #bdbdbd;
+    }
+    
+    .MuiCheckbox-root.Mui-checked  {
+        color: #FFC600;
+    }
+    .MuiFormControlLabel-label {
+        font-family: var(--base-font-family);
+        color: #FFFFFF;
+        font-size: 0.75em;
+    }
+    .MuiButtonBase-root.MuiCheckbox-root {
+        padding: 0.3em;
+        margin-left: 0.3em;
+    }
+    .MuiInputBase-multiline {
+        background-color: white; /* Change background color here */
+      }
+    .MuiButton-root {
+        background-color: #FFC600;
+        border-color: #FFC600;
+        color: #000000;
+        padding: 0.5em 1em;
+        margin-top: 1em;
+        width: 40%;
+        &:hover {
+            background-color: #000000; 
+            color: #FFC600; 
+            border-color:#FFC600; 
+        }
 
-        .form-button {
-            background-color: #FFC600;
-            color: #000000;
-            padding: 0.5em 1em;
-        }
     }
-    .MuiSnackbar-root {
-        left: 43%;
+    .submit-reset{
+        display: flex;
+        justify-content: space-between;
+        text-transform: none;
     }
+    .send-another-email{
+        width: 100%;
+        font-variant: normal;
+        margin:20px 0;
+        text-transform: none;
+    }
+    
 }
 
 // FOOTER DISCLAIMER -----------------------------------------
@@ -619,6 +641,7 @@ box-sizing: border-box;
         width: 100%;
     }
 }
+
 
 // RESPONSIVE - MOBILE --------------------------------------
 @media all and (max-width: 500px) {
