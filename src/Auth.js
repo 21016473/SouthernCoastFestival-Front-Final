@@ -45,16 +45,15 @@ class Auth {
     }
 
     // async check
-    async check(success) {
+    async check(complete) {
         // show splash screen while loading
         render(splash, App.rootEl)
 
         // check loacl token exists
-        if(!localStorage.accessToken) {
-            // no local token
-            // redirect
-            gotoRoute('/')
-            return
+        if(!localStorage.getItem('accessToken')) {
+          this.currentUser = {
+            accessLevel: 'user',
+          }
         }
 
         // validate token via the backend
@@ -67,26 +66,23 @@ class Auth {
 
         // response not ok
         if(!response.ok) {
-            // console log error
-            const err = await response.json()
-            if(err) console.log(err)
-            // delete local token
-            localStorage.removeItem('accessToken')
-            Toast.show("session expired, please sign in")
-            // redirect to sign in
-            gotoRoute('/')
-            return
-        }
-
+          // console log error
+          const err = await response.json()
+          if(err) console.log(err)
+          // delete local token
+          localStorage.removeItem('accessToken')
+          Toast.show("session expired, please sign in")
+      } else {
         // token is valid
         const data = await response.json()
-        // set currentUser obj
         this.currentUser = {
           ...data.user,
           accessLevel: data.user.accessLevel || 'user'
         }
-        // run success
-        success()
+        console.log(data.user.accessLevel)
+      }
+
+      complete()
     }
 
     // async sign out

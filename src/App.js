@@ -6,7 +6,7 @@ class App {
     constructor() {
         this.name = "Southern Coast Festival"
         this.version = "1.0.0"
-        this.apiBase = "https://southerncostfestival-backend-a3.onrender.com"
+        this.apiBase = "http://localhost:3000"
         this.rootEl = document.getElementById("root")
     }
 

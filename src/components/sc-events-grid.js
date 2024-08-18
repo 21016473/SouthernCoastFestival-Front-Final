@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Card, CardContent, CardMedia, Typography, Box, IconButton, Grid, Skeleton, Tooltip, useMediaQuery, ListItem, ListItemButton, Select, MenuItem } from '@mui/material'
+import React, { useState, useEffect, useRef } from 'react'
+import { Card, CardContent, CardMedia, Typography, Box, IconButton, Grid, Skeleton, Tooltip, useMediaQuery, ListItem, ListItemButton, Select, MenuItem, Stack, Button } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faBowlFood, faLightbulb, faShop } from '@fortawesome/free-solid-svg-icons'
@@ -15,9 +15,16 @@ const EventContainer = () => {
     const [events, setEvents] = useState([])
     const [selectedCategory, setSelectedCategory] = useState('All')
     const [selectedTag, setSelectedTag] = useState('all')
+    const [favourites, setFavourites] = useState([])
 
     const theme = useTheme()
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
+    // Load favourites from local storage
+    useEffect(() => {
+        const savedFavourites = JSON.parse(localStorage.getItem('favourites')) || []
+        setFavourites(savedFavourites)
+    }, [])
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -33,6 +40,8 @@ const EventContainer = () => {
     }, [])
 
     const [filteredEvents, setFilteredEvents] = useState([])
+    const [visibleCount, setVisibleCount] = useState(8)
+    const [showMore, setShowMore] = useState(true)
 
     // filter events by category, then tag
     useEffect(() => {
@@ -46,12 +55,16 @@ const EventContainer = () => {
             }
 
             if (selectedTag !== 'all') {
-                filtered = filtered.filter(event => {
-                    if (Array.isArray(event.eventtag)) {
-                        return event.eventtag.includes(selectedTag)
-                    }
-                    return event.eventtag === selectedTag
-                })
+                if (selectedTag === 'favourites') {
+                    filtered = filtered.filter(event => favourites.includes(event._id))
+                } else {
+                    filtered = filtered.filter(event => {
+                        if (Array.isArray(event.eventtag)) {
+                            return event.eventtag.includes(selectedTag)
+                        }
+                        return event.eventtag === selectedTag
+                    })
+                }
             }
         }
 
@@ -68,15 +81,26 @@ const EventContainer = () => {
         setSelectedTag(tag)
     }
 
+    const toggleFavourite = (eventId) => {
+        let updatedFavourites = []
+        if (favourites.includes(eventId)) {
+            updatedFavourites = favourites.filter(id => id !== eventId)
+        } else {
+            updatedFavourites = [...favourites, eventId]
+        }
+        setFavourites(updatedFavourites)
+        localStorage.setItem('favourites', JSON.stringify(updatedFavourites))
+    }
+
     const categories = [
         { name: 'All', icon: faCircle, label: 'All'},
-        { name: 'Food', icon: faBowlFood, label: 'Eat + Drink'},
+        { name: 'Eat + Drink', icon: faBowlFood, label: 'Eat + Drink'},
         { name: 'Entertainment', icon: faLightbulb, label: 'Entertainment'},
         { name: 'Shop', icon: faShop, label: 'Shop'}
     ]
 
     const tags = [
-        { value: 'all', label: 'All', categories: ['All', 'Food', 'Entertainment', 'Shop'] },
+        { value: 'all', label: 'All', categories: ['All', 'Eat + Drink', 'Entertainment', 'Shop'] },
         { value: 'Family Friendly', label: 'Family Friendly', categories: ['All', 'Entertainment', 'Shop'] },
         { value: '18+ Adults Only', label: '18+ Adults Only', categories: ['All', 'Entertainment', 'Shop'] },
         { value: 'For Children', label: 'For Children', categories: ['All', 'Entertainment', 'Shop'] },
@@ -86,18 +110,27 @@ const EventContainer = () => {
         { value: 'Fireworks', label: 'Fireworks', categories: ['Entertainment', 'Shop'] },
         { value: 'Performance', label: 'Performance', categories: ['Entertainment', 'Shop'] },
         { value: 'Jewelry', label: 'Jewelry', categories: ['Shop'] },
-        { value: 'Food', label: 'Food', categories: ['Food'] },
-        { value: 'Drink', label: 'Drink', categories: ['Food'] },
-        { value: 'Vegan', label: 'Vegan', categories: ['Food'] },
-        { value: 'Vegetarian', label: 'Vegetarian', categories: ['Food'] },
-        { value: 'Alcoholic', label: 'Alcoholic', categories: ['Food'] },
-        { value: 'Gluten Free', label: 'Gluten Free', categories: ['Food'] },
-        { value: 'Nut Free', label: 'Nut Free', categories: ['Food'] },
-        { value: 'Dairy Free', label: 'Dairy Free', categories: ['Food'] },    
-        { value: 'favourites', label: 'Favourites', categories: ['All'], icon: 'favorite_border' }
+        { value: 'Food', label: 'Food', categories: ['Eat + Drink'] },
+        { value: 'Drink', label: 'Drink', categories: ['Eat + Drink'] },
+        { value: 'Vegan', label: 'Vegan', categories: ['Eat + Drink'] },
+        { value: 'Vegetarian', label: 'Vegetarian', categories: ['Eat + Drink'] },
+        { value: 'Alcoholic', label: 'Alcoholic', categories: ['Eat + Drink'] },
+        { value: 'Gluten Free', label: 'Gluten Free', categories: ['Eat + Drink'] },
+        { value: 'Nut Free', label: 'Nut Free', categories: ['Eat + Drink'] },
+        { value: 'Dairy Free', label: 'Dairy Free', categories: ['Eat + Drink'] },    
+        { value: 'favourites', label: 'Favourites', categories: ['All', 'Eat + Drink', 'Entertainment', 'Shop'], icon: 'favorite_border' }
     ]
 
     const filteredTags = tags.filter(tag => tag.categories.includes(selectedCategory) || selectedCategory === 'All')
+
+    const handleViewMore = () => {
+        if (showMore) {
+            setVisibleCount(filteredEvents.length)
+        } else {
+            setVisibleCount(8)
+        }
+        setShowMore(!showMore)
+    }
 
     return (
         <>
@@ -180,9 +213,11 @@ const EventContainer = () => {
                 </Grid> 
                 </>
             ) : (
+                <>
                 <Grid container spacing={3} className="card-grid">
-                    {filteredEvents.map(event => {
-                        const imageUrl = event.eventimage ??  placeholderImg
+                    {filteredEvents.slice(0, visibleCount).map((event) => {
+                        const imageUrl = event.eventimage || placeholderImg
+                        const isFavourite = favourites.includes(event._id)
 
                         return (
                             <Grid item xs={12} sm={6} md={4} lg={3} key={event._id}>
@@ -202,11 +237,11 @@ const EventContainer = () => {
                                             <Typography className="event-title">
                                                 {event.eventdisplayname}
                                             </Typography>
-                                            <Tooltip title="Feature coming soon" placement="top" arrow>
+                                            <Tooltip title={isFavourite ? "Unfavourite" : "Favourite"} placement="top" arrow>
                                                 <span>
-                                                <IconButton className="event-button" disabled>
-                                                    <span className="material-icons">
-                                                        favorite_border
+                                                <IconButton className="event-button" onClick={() => toggleFavourite(event._id)}>
+                                                    <span className="material-icons" style={{ color: isFavourite ? '#FFC600' : '#bdbdbd'}}>
+                                                        {isFavourite ? 'favorite' : 'favorite_border'}
                                                     </span>
                                                 </IconButton>
                                                 </span>
@@ -215,10 +250,16 @@ const EventContainer = () => {
                                         <Typography className="event-description">
                                             {event.eventdescription}
                                         </Typography>
-                                        <Typography className="event-times">
-                                            {event.eventsaturdaytime}<br></br>
-                                            {event.eventsundaytime}
-                                        </Typography>
+                                        <Stack className="event-times" direction="row">
+                                            <Stack>
+                                                <Typography className="event-description">Sat:</Typography>
+                                                <Typography className="event-description">Sun:</Typography>
+                                            </Stack>
+                                            <Stack>
+                                                <Typography className="event-description">{event.eventsaturdaytime}</Typography>
+                                                <Typography className="event-description">{event.eventsundaytime}</Typography>
+                                            </Stack>
+                                        </Stack>
                                         <Typography className="hidden">
                                             {event.eventstallnumber}
                                         </Typography>
@@ -232,6 +273,22 @@ const EventContainer = () => {
                         )
                     })}
                 </Grid>
+                {filteredEvents.length > 8 && (
+                    <Stack 
+                        justifyContent="center" 
+                        alignItems="center" 
+                        marginTop="1em" 
+                        className={showMore ? 'floating-view-more' : 'floating-view-less'}
+                    >
+                        <Button 
+                            variant="contained" 
+                            onClick={handleViewMore}
+                        >
+                            {showMore ? 'View More' : 'View Less'}
+                        </Button>
+                    </Stack>
+                )}
+                </>
             )}
         </>
     )

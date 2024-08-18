@@ -119,6 +119,8 @@ class AppHeader extends LitElement {
     }
 
     render() {
+        const isAdminRoute = window.location.pathname === '/admin'
+
         return html`
             <style>
                 @keyframes blink {
@@ -234,14 +236,16 @@ class AppHeader extends LitElement {
 
                 <div id="app-header-menu"></div>
 
-                <nav class="app-header-nav">
-                    <ul>
-                        <li><a class="nav-item active" href="#home" id="home-link">Home</a></li> 
-                        <li><a class="nav-item" href="#events" id="events-link">Events</a></li>
-                        <li><a class="nav-item" href="#venue" id="venue-link">Venue</a></li>
-                        <li><a class="nav-item" href="#about" id="about-link">About</a></li>
-                    </ul>
-                </nav>
+                ${!isAdminRoute ? html `
+                    <nav class="app-header-nav">
+                        <ul>
+                            <li><a class="nav-item active" href="#home" id="home-link">Home</a></li> 
+                            <li><a class="nav-item" href="#events" id="events-link">Events</a></li>
+                            <li><a class="nav-item" href="#venue" id="venue-link">Venue</a></li>
+                            <li><a class="nav-item" href="#about" id="about-link">About</a></li>
+                        </ul>
+                    </nav>
+                ` : ''}
             </header>
         `;
     }

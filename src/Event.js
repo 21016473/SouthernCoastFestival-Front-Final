@@ -8,6 +8,7 @@ class Event {
         this.currentUser = {}
     }
 
+    // NEW EVENT
     async newEvent(data) {
         // post request
         const response = await fetch(`${App.apiBase}/events`, {
@@ -24,10 +25,11 @@ class Event {
             // run fail()
         if(typeof fail == 'function') fail()
         } else {
-            gotoRoute('/')
+            window.location.reload()
         }
     }
 
+    // GET ALL EVENTS
     async getEvents() {
         // fetch json data
         const response = await fetch(`${App.apiBase}/events`, {
@@ -49,6 +51,102 @@ class Event {
 
         // return data
         return data
+    }
+
+    // GET SINGLE EVENT BY ID
+    async getEventById(eventId) {
+        const response = await fetch(`${App.apiBase}/events/${eventId}`, {
+            method: 'GET',
+            headers: {"Authorization": `Bearer ${localStorage.accessToken}`}
+        })
+
+        // if response not ok
+        if(!response.ok) {
+            const err = await response.json()
+            if(err) console.log(err)
+            throw new Error('Problem getting event')
+        } else {
+            const eventData = await response.json()
+            return eventData   
+        }
+    }
+
+    // EDIT EVENT
+    async updateEvent(eventId, eventData, dataType = 'form'){
+        // validate
+        if(!eventId || !eventData) return
+
+        let responseHeader
+
+        // form data
+        if(dataType == 'form') {
+            const formData = new FormData()
+            for (const key in eventData) {
+                    formData.append(key, eventData[key])
+            }
+
+            // fetch request to backend
+            responseHeader = {
+                method: 'PUT',
+                headers: {"Authorization": `Bearer ${localStorage.accessToken}`},
+                body: formData
+            }
+
+            // json data
+        } else if(dataType == 'json') {
+            responseHeader = {
+                method: 'PUT',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.accessToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(eventData)
+            }
+        }
+
+        // make fetch request to update event
+        try {
+            const response = await fetch(`${App.apiBase}/events/${eventId}`, responseHeader)
+        
+            // if response not ok
+            if (!response.ok) {
+                const err = await response.json()
+                if (err) console.log(err)
+                throw new Error('Problem updating event')
+            }
+
+            // parse json response from back
+            const data = await response.json()
+            console.log(data)
+
+            window.location.reload()
+
+            return data
+        } catch (error) {
+            console.error('Error updating event:', error)
+            throw error
+        }
+    }
+
+    // DELETE EVENT
+    async deleteEvent(eventId) {
+            const response = await fetch(`${App.apiBase}/events/${eventId}`, {
+                method: 'DELETE',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.accessToken}`,
+                    "Content-Type": "application/json"
+                }
+            })
+        
+            // if response not ok
+            if (!response.ok) {
+                const err = await response.json()
+                if (err) console.log(err)
+                throw new Error('Problem updating event')
+            } else {
+                console.log('Event deleted successfully')
+                return
+            }        
     }
 }
 

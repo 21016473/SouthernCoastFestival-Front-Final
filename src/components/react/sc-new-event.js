@@ -265,6 +265,14 @@ const NewEventForm = ({ open, onClose }) => {
                     </form>
                 </Box>
             </DialogContent>
+
+            <Snackbar 
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                message={snackbarMessage}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            />
         </Dialog>
     )
 }

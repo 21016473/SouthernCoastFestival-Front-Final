@@ -1,8 +1,6 @@
 import App from '../../App'
 import {html, render } from 'lit-html'
 import {gotoRoute, anchorRoute} from '../../Router'
-import Auth from '../../Auth'
-import Utils from '../../Utils'
 
 class ErrorView {
   init(){
@@ -13,10 +11,11 @@ class ErrorView {
 
   render(){
     const template = html`
-      <div>        
+      <div class="fourohfour">
         <h1>Oops!</h1>
-        <p>Sorry, we couldn't find that.</p>
-      </div>      
+        <p>We couldn't find that page.</p>
+        <button class="home-btn" @click=${() => {gotoRoute('/')}}>Home</button>
+      </div>
     `
     render(template, App.rootEl)
   }

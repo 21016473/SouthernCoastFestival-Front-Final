@@ -89,6 +89,23 @@ box-sizing: border-box;
     }
 }
 
+.floating-view-less {
+    position: sticky;
+    bottom: 0;
+    right: 1em;
+    z-index: 1000;
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 25%, rgba(255,255,255,0) 100%);
+    padding-bottom: 1.5em;
+}
+.floating-view-more, .floating-view-less {
+    .MuiButtonBase-root.MuiButton-root {
+        background-color: #FFC600;
+        color: #000000;
+        text-transform: capitalize;
+    }
+}
+
 // SKELETON ------------
 .skel-grid{
     height: 100%;
@@ -99,6 +116,8 @@ box-sizing: border-box;
         padding-left: 1em;
     }
 }    
+
+
 
 // EVENT CARD --------------------------------------
 .card-grid {
@@ -184,13 +203,18 @@ box-sizing: border-box;
     .event-times {
         font-family: var(--base-font-family);
         color: #FFFFFF;
-        font-size: 75%;
+        font-size: 100%;
         padding: 0 1.5em 1em;
         margin-top: auto;
         position: absolute;
         bottom: 0;
         right: 0;
         text-align: right;
+
+        .event-description {
+            margin-bottom: 0;
+            padding: 0 0.3em;
+        }
     }
 
     .event-button {
@@ -597,9 +621,171 @@ box-sizing: border-box;
 .manage-event-container {
     width: 80%;
     height: 25em;
-    background-color: #2b2b2b;
+    background-color: #505050;
+    border-radius: 0.2em;
     margin: auto;
     padding: 1em;
+    overflow-x: hidden;
+    scrollbar-color: #2b2b2b #505050;
+
+    .grid-item {
+        margin: 0.5em 0;
+
+        .MuiStack-root { // grid rows
+            align-items: center;
+        }
+        .edit-btn {
+            background-color: #FFC600;
+            color: #000000;
+            text-transform: capitalize;
+            font-family: var(--base-font-family);
+            min-width: 3em;
+            height: 1em;
+            padding: 1em;
+        }
+        .delete-btn {
+            color: black;
+        }
+        .grid-img {
+            margin: 0 0.25em;
+            display: flex;
+            align-items: center;
+        }
+        .grid-text {
+            margin: 0 0.25em;
+        }
+
+        .MuiInputBase-input.MuiOutlinedInput-input {
+            background-color: #505050;
+            border-radius: 0.3em;
+        }
+    }
+}
+
+// EDIT EVENT FORM ------------------------------------------
+.edit-event-form {
+    p {
+        color: #000000;
+    }
+    .form-content {
+        margin-top: 0.5em;
+    }
+    // text fields
+    .MuiInputBase-root.MuiOutlinedInput-root {
+        font-family: var(--base-font-family);
+        font-size: 0.75em !important;
+    }
+    .form-text {
+        margin: 0.25em 0;
+        width: 100%;
+
+        .MuiInputBase-root, label { // textfield colour
+            color: #000000;
+            font-size: 0.75em;
+        }
+        .MuiOutlinedInput-notchedOutline {
+            border: 0.1em solid #000000;
+        }
+        .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+            border: 0.2em solid #FFC600;
+        }    
+        .MuiInputLabel-shrink {
+            color: #FFC600;
+        }
+    }
+
+    // vendor details
+    .vendor-details {
+        display: flex;
+        justify-content: space-between;
+        .form-text {
+            width: 32.5%;
+        }
+    }
+
+    // upload image
+    .image-input {
+        margin: 1em 0 0.5em 0;
+        .upload-image {
+            background-color: #FFC600;
+            height: 2.5em;
+            width: 100%;
+            margin-left: 1em;
+        }
+        .MuiButtonBase-root.MuiButton-root {
+            color: #000000;
+            border: none;
+        }
+    }
+
+    // dropdown
+    .category-dropdown {
+        .MuiFormControl-root{
+            width: 100%;
+        }
+        .MuiInputBase-input {
+            padding: 8.5px 14px;
+        }
+        .MuiOutlinedInput-notchedOutline {
+            border: 1px solid #000000;
+            
+        }
+        
+    }
+
+    // checkboxes
+    .form-section { //box containing tags
+        background-color: #f5f5f5;
+        padding: 1em;
+        margin: 0.5em 0;
+        border-radius: 0.2em;
+    }
+    .tag-grid { // turn display to grid and adjust layout
+        display: grid;
+        grid-template-columns: repeat(3, 33% [col-start]);
+    }
+    #tag-section { // checkbox display
+        .form-sub {
+            font-size: 1em;
+        }
+        .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label { // checkbox text
+            font-size: 0.75em;
+        }
+        .form-checkbox { // checkbox colors, checked and unchecked
+            .MuiCheckbox-root {
+                color: #505050;
+            }
+            .MuiCheckbox-root.Mui-checked {
+                color: #505050;
+            }
+            .MuiButtonBase-root.MuiCheckbox-root {
+                padding: 0.3em;
+                margin-left: 0.3em;
+            }
+        }
+    }
+
+    // time details
+    .time-details {
+        display: flex;
+        justify-content: space-between;
+
+        .time-col {
+            width: 49.5%;
+        }
+    }
+
+    .event-button {
+        border: 0.1em solid #000000 !important;
+        background-color: #FFC600;
+        color: #000000;
+        box-shadow: none;
+        margin-top: 1em;
+    }
+    .MuiButtonBase-root.MuiButton-root:hover {
+        background-color: #000000;
+        color: #FFFFFF;
+    }
 }
 
 // RESPONSIVE - TABLET ---------------------------------

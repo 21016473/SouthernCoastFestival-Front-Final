@@ -3,6 +3,7 @@ import { Drawer, List, ListItem, ListItemText, Typography, Tooltip } from '@mui/
 import Auth from '../Auth'
 import '../scss/react.scss'
 import NewEventDialog from './react/sc-new-event'
+import { gotoRoute } from '../../src/Router'
 
 export default function MUIDrawer() {
     const [isAdmin, setIsAdmin] = useState(Auth.currentUser.accessLevel === 'admin')
@@ -12,11 +13,12 @@ export default function MUIDrawer() {
         setIsAdmin(Auth.currentUser.accessLevel === 'admin')
     }, [Auth.currentUser.accessLevel])
 
+
     const menuItems = [
+        { text: 'Home' },
         { text: 'New Event' },
-        { text: 'Manage Events', disabled: false, tooltip: '', className: '' },  // Enable Manage Events
-        { text: 'Manage Users', disabled: true, tooltip: 'Feature coming soon', className: 'disabled' },
-        { text: 'Log Out', disabled: false, tooltip: '', className: '' }
+        { text: 'Manage Events' },
+        { text: 'Log Out' }
     ]
 
     const handleLogout = () => {
@@ -28,10 +30,14 @@ export default function MUIDrawer() {
     const handleMenuItemClick = (text) => {
         if (text === 'New Event') {
             setIsDialogOpen(true)
+        } else if (text === 'Manage Events') {
+            gotoRoute('/admin')
+        } else if (text === 'Home') {
+            gotoRoute('/')
         } else if (text === 'Log Out') {
             handleLogout()
-        }
-    }
+    }}
+
 
     const handleCloseDialog = () => {
         setIsDialogOpen(false)
