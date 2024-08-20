@@ -10,6 +10,8 @@ import VenueCard from '../../components/react/sc-venue-cards.js'
 import AdminNav from '../../components/sc-admin-nav.js'
 import VideoControlButton from '../../components/react/icons/sc-video-control.js'
 import { PauseCircle, PlayCircle } from '@mui/icons-material'
+import pause from '../../../static/images/pause.png'
+import play from '../../../static/images/play-buttton.png'
 
 class HomeView {
   constructor() {
@@ -44,19 +46,17 @@ class HomeView {
     return new URL('../../../static/images/hero-light.mp4', import.meta.url).toString()
   }
 
-  getIconUrl(iconName) {
-    return new URL(`../../../static/images/${iconName}`, import.meta.url).toString()
-  }
-
   toggleVideoPlayback = () => {
     const video = document.querySelector('.hero-video')
-    const controlButton = document.querySelector('.video-control i')
+    const controlButton = document.querySelector('.video-control img')
     if (video.paused) {
       video.play()
-      controlButton.src = this.getIconUrl('play-button.png')
+      controlButton.src = pause
+      console.log(controlButton.src)
     } else {
       video.pause()
-      controlButton.src = this.getIconUrl('pause.png')
+      controlButton.src = play
+      console.log(controlButton.src)
     }
   }
 
@@ -71,7 +71,7 @@ class HomeView {
 
   render() {
     const videoUrl = this.getVideoUrl()
-    const pauseIconUrl = this.getIconUrl('pause.png')
+    const pauseIconUrl = pause
     const pageContentDisplayStyle = this.state.isPageContentVisible ? 'block' : 'none'
 
     const template = html`
