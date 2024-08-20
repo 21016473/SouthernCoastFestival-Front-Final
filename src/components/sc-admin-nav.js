@@ -15,8 +15,7 @@ export default function MUIDrawer() {
 
 
     const menuItems = [
-        { text: 'Home' },
-        { text: 'New Event' },
+        { text: 'Add Event' },
         { text: 'Manage Events' },
         { text: 'Log Out' }
     ]
@@ -28,12 +27,10 @@ export default function MUIDrawer() {
     }
 
     const handleMenuItemClick = (text) => {
-        if (text === 'New Event') {
+        if (text === 'Add Event') {
             setIsDialogOpen(true)
         } else if (text === 'Manage Events') {
             gotoRoute('/admin')
-        } else if (text === 'Home') {
-            gotoRoute('/')
         } else if (text === 'Log Out') {
             handleLogout()
     }}

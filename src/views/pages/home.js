@@ -9,6 +9,7 @@ import ContactForm from '../../components/react/sc-contact-form.js'
 import VenueCard from '../../components/react/sc-venue-cards.js'
 import AdminNav from '../../components/sc-admin-nav.js'
 import VideoControlButton from '../../components/react/icons/sc-video-control.js'
+import { PauseCircle, PlayCircle } from '@mui/icons-material'
 
 class HomeView {
   constructor() {
@@ -43,14 +44,19 @@ class HomeView {
     return new URL('../../../static/images/hero-light.mp4', import.meta.url).toString()
   }
 
+  getIconUrl(iconName) {
+    return new URL(`../../../static/images/${iconName}`, import.meta.url).toString()
+  }
+
   toggleVideoPlayback = () => {
     const video = document.querySelector('.hero-video')
+    const controlButton = document.querySelector('.video-control i')
     if (video.paused) {
       video.play()
-      this.updateState({ isPlaying: true })
+      controlButton.src = this.getIconUrl('play-button.png')
     } else {
       video.pause()
-      this.updateState({ isPlaying: false })
+      controlButton.src = this.getIconUrl('pause.png')
     }
   }
 
@@ -63,17 +69,9 @@ class HomeView {
     this.render()
   }
 
-  renderVideoControlButton() {
-    const videoControlButtonContainer = document.getElementById('video-control-button')
-    if (videoControlButtonContainer) {
-      renderReactComponent(() => (
-        <VideoControlButton isPlaying={this.state.isPlaying} onClick={this.toggleVideoPlayback} />
-      ), videoControlButtonContainer)
-    }
-  }
-
   render() {
     const videoUrl = this.getVideoUrl()
+    const pauseIconUrl = this.getIconUrl('pause.png')
     const pageContentDisplayStyle = this.state.isPageContentVisible ? 'block' : 'none'
 
     const template = html`
@@ -94,7 +92,7 @@ class HomeView {
                 Your browser does not support the video tag.
               </video>
               <button class="video-control" @click="${this.toggleVideoPlayback}">
-                <i class="fas fa-pause"></i>
+                <img src="${pauseIconUrl}" alt="Pause Video" />
               </button>
               <div id="hero-content">
                 <h1>Come experience Geelong's Festival of Lights!</h1>
@@ -116,7 +114,9 @@ class HomeView {
 
           <!--ABOUT-->
           <div id="about">
+
             <div class="about-container">
+
               <div id="about-info">
                 <h1>About the Festival</h1>
                 <p>Transforming the city of Geelong into a luminous wonderland with art installations, dazzling displays, vibrant projections, and fireworks.</p>
@@ -128,12 +128,13 @@ class HomeView {
                   <li>Sunday,25 August 2024 11am to 10pm</li>
                 </ul>
               </div>
+
               <div id="contact-form"></div>
-            </div>
-                        <div id="footer-container">
-              <sc-app-footer></sc-app-footer>
-            </div>
+
           </div>
+        </div>
+        <div id="footer-container">
+          <sc-app-footer></sc-app-footer>
         </div>
       </div>
     `
@@ -150,8 +151,6 @@ class HomeView {
 
     const contactFormContainer = document.getElementById('contact-form')
     renderReactComponent(ContactForm, contactFormContainer)
-
-    this.renderVideoControlButton()
   }
 }
 

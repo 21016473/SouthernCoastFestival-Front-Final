@@ -1,14 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Grid, Box, Button, Stack, Typography, useMediaQuery, Select, MenuItem, FormControl } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faMap, faWheelchair, faParking, faBus } from '@fortawesome/free-solid-svg-icons'
 import '../../scss/react.scss'
 
+import festivalImage from '../../../static/images/festival-map.png'
+import parkingImage from '../../../static/images/parking.jpg'
+import transportImage from '../../../static/images/transport.jpg'
+
 const venueCards = () => {
     const [activeSection, setActiveSection] = useState('map')
     const theme = useTheme()
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+    const imgRef = useRef(null)
+    const containerRef = useRef(null)
+    const [isDragging, setIsDragging] = useState(false)
+    const [startX, setStartX] = useState(0)
+    const [startY, setStartY] = useState(0)
+    const [scrollLeft, setScrollLeft] = useState(0)
+    const [scrollTop, setScrollTop] = useState(0)
+
+    const handleMouseDown = (e) => {
+        setIsDragging(true)
+        setStartX(e.clientX)
+        setStartY(e.clientY)
+        setScrollLeft(containerRef.current.scrollLeft)
+        setScrollTop(containerRef.current.scrollTop)
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return
+        const x = e.clientX - startX
+        const y = e.clientY - startY
+        containerRef.current.scrollLeft = scrollLeft - x
+        containerRef.current.scrollTop = scrollTop - y
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false)
+    };
 
     const handleButtonClick = (section) => {
         setActiveSection(section)
@@ -138,8 +169,18 @@ const venueCards = () => {
             )}
             {activeSection === 'map' && (
                 <Box id="map">
-                    <Typography className="subtitle">Festival Map</Typography>
-                    <Box id="map-img"></Box>
+                <Typography className="subtitle">Event Map</Typography>
+                <Typography className="paragraph">Pan around the map.</Typography>
+                <Box
+                    id="festival-img"
+                    ref={containerRef}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseUp}
+                >
+                    <img ref={imgRef} src={festivalImage} alt="Event map" />
+                </Box>
                 </Box>
             )}
             {activeSection === 'accessibility' && (
@@ -183,6 +224,9 @@ const venueCards = () => {
                         <Typography className="bold">On-site: </Typography>
                         <Typography className="paragraph">During peak times, additional overflow parking is available nearby. Shuttle services will be provided to transport guests to and from the main event area.</Typography>
                     </Stack>
+                    <Box id="parking-img">
+                    <img src={parkingImage} alt="Parking" style={{ width: '100%', height: 'auto' }} />
+                    </Box>
                 </Box>
             )}
             {activeSection === 'transport' && (
@@ -190,6 +234,9 @@ const venueCards = () => {
                     <Typography className="subtitle">Transport</Typography>
                     <Typography className="paragraph">For convenient access to the light festival, many parking spots are available nearby. Alternatively, public transport is easy with frequent bus services and a nearby train station.</Typography>
                     <Typography className="paragraph">Follow signs for designated parking areas or plan your journey using public transport options for a hassle-free visit to this event.</Typography>
+                    <Box id="transport-img">
+                        <img src={transportImage} alt="Transport" style={{ width: '100%', height: 'auto' }} />
+                    </Box>
                 </Box>
             )}
         </Box>
