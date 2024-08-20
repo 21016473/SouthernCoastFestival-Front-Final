@@ -3,7 +3,7 @@ import { Box, Typography, TextField, Stack, Button, Snackbar } from '@mui/materi
 import '../../scss/react.scss'
 import Auth from '../../Auth'
 
-const LoginForm = () => {
+const LoginForm = ({ open, onClose, onLoginSuccess }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -52,8 +52,8 @@ const LoginForm = () => {
                 if (success) {
                     setSnackbarMessage('Logged in successfully')
                     setSnackbarOpen(true)
+                    onLoginSuccess()
                 } else {
-                    setSnackbarMessage('Login failed: incorrect credentials')
                     setSnackbarOpen(true)
                 }
             })
@@ -85,6 +85,7 @@ const LoginForm = () => {
                 autoHideDuration={6000}
                 onClose={handleCloseSnackbar}
                 message={snackbarMessage}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             />
         </Box>
     )

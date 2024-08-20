@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faBowlFood, faLightbulb, faShop } from '@fortawesome/free-solid-svg-icons'
 
-import placeholderImg from '../../static/images/alisa-music-entertainment.jpg'
+import placeholderImg from '../../static/images/treeoflife.jpg'
 import '../scss/react.scss'
 
 // import Event
@@ -280,12 +280,15 @@ const EventContainer = () => {
                         marginTop="1em" 
                         className={showMore ? 'floating-view-more' : 'floating-view-less'}
                     >
+                        {!isSmallScreen && (
                         <Button 
                             variant="contained" 
                             onClick={handleViewMore}
                         >
                             {showMore ? 'View More' : 'View Less'}
                         </Button>
+                        )}
+                        
                     </Stack>
                 )}
                 </>

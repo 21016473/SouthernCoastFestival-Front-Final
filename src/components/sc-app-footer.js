@@ -1,22 +1,39 @@
 import { LitElement, html, css } from 'lit'
 import { createRoot } from 'react-dom/client'
+import React, { useState, forwardRef } from 'react'
 import DiscDialog from './react/sc-disc-dialog'
 import LoginDialog from './react/sc-login-dialog'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
 
 import share from '../../static/images/share-icon.png'
 import insta from '../../static/images/instagram-icon.png'
 import facebook from '../../static/images/facebook-icon.png'
 
+const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
+
 class AppFooter extends LitElement {
     static properties = {
         dialogOpen: { type: Boolean },
         loginOpen: { type: Boolean },
+        snackbarOpen: { type: Boolean },
+        snackbarMessage: { type: String },
+        snackbarSeverity: { type: String }
     };
 
     constructor() {
         super();
         this.dialogOpen = false;
         this.loginOpen = false;
+        this.snackbarOpen = false;
+        this.snackbarMessage = ''
+        this.snackbarSeverity = 'success'
+
+        this.snackbarContainer = document.createElement('div')
+        document.body.appendChild(this.snackbarContainer)
+        this.snackbarRoot = createRoot(this.snackbarContainer)
     }
 
     firstUpdated() {
@@ -30,6 +47,13 @@ class AppFooter extends LitElement {
         if (changedProperties.has('dialogOpen') || changedProperties.has('loginOpen')) {
             this.renderReactDialog()
         }
+        if (changedProperties.has('snackbarOpen')) {
+            this.renderSnackbar()
+        }
+    }
+
+    handleLoginSuccess() {
+        this.loginOpen = false;
     }
 
     renderReactDialog() {
@@ -46,6 +70,35 @@ class AppFooter extends LitElement {
             />
             </>
         )
+    }
+
+    renderSnackbar() {
+        this.snackbarRoot.render(
+            <Snackbar 
+                open={this.snackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => this.snackbarOpen = false}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert onClose={() => this.snackbarOpen = false} severity={this.snackbarSeverity}>
+                    {this.snackbarMessage}
+                </Alert>
+            </Snackbar>
+        )
+    }
+
+    copyUrlToClipboard() {
+        const url = window.location.href
+        navigator.clipboard.writeText(url).then(() => {
+            this.snackbarMessage = 'URL copied to clipboard!'
+            this.snackbarSeverity = 'success'
+            this.snackbarOpen = true
+        }).catch(err => {
+            console.error('Failed to copy: ', err)
+            this.snackbarMessage = 'Failed to copy URL'
+            this.snackbarSeverity = 'error'
+            this.snackbarOpen = true
+        });
     }
 
     toggleDialog() {
@@ -123,8 +176,10 @@ class AppFooter extends LitElement {
                     <div><h2 style="font-family: var(--base-font-family)">Geelong</h2></div>
                     <div><h2 style="font-family: var(--sub-font-family)">2024</h2></div>
                     <div class="media-icons">
-                        <img src=${share} />
+                        <img src=${share} @click="${this.copyUrlToClipboard}"/>
+                        <a href="https://www.instagram.com/southern_fol/" target="_blank" rel="noopener noreferrer">
                         <img src=${insta} />
+                        <a href="https://www.facebook.com/profile.php?id=61564461005823" target="_blank" rel="noopener noreferrer">
                         <img src=${facebook} />
                     </div>
                 </div>
@@ -138,6 +193,12 @@ class AppFooter extends LitElement {
                 </div>
             </footer>
         `;
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback()
+        this.snackbarRoot.unmount()
+        document.body.removeChild(this.snackbarContainer)
     }
 }
 

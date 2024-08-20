@@ -35,7 +35,15 @@ class AdminView {
         <sc-app-header></sc-app-header>
         
         <div id="manage-events">
-          <h1>Events Manager</h1>
+          <div id="header">
+            <div></div>
+            <h1>Events Manager</h1>
+            <button class="exit-btn" @click=${() => gotoRoute('/')} title="Back to Home">
+              <span>
+                &#10005;
+              </span>
+            </button>
+          </div>
           <div id="admin-content"></div>
         </div>
 

@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { Box, Stack, Grid, Button, IconButton, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Skeleton, Typography } from '@mui/material'
 import { FaTrash } from 'react-icons/fa6'
 import '../../scss/react.scss'
-import placeholderImg from '../../../static/images/chef-bryan-entertainment.jpg'
+import placeholderImg from '../../../static/images/treeoflife.jpg'
 import Event from '../../Event'
 import EditEventDialog from '../react/sc-edit-event'
+import NewEventDialog from '../react/sc-new-event'
 
 const ManageEventsContainer = () => {
     const [events, setEvents] = useState([])
     const [loading, setLoading] = useState(true)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [isNewDialogOpen, setIsNewDialogOpen] = useState(false)
     const [selectedEventId, setSelectedEventId] = useState(null)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
@@ -27,6 +29,10 @@ const ManageEventsContainer = () => {
         fetchEvents()
     }, [])
 
+    const handleAddClick = () => {
+        setIsNewDialogOpen(true)
+    }
+
     const handleEditClick = (eventId) => {
         localStorage.setItem('selectedEventId', eventId) // save to localStorage
         setSelectedEventId(eventId)
@@ -36,6 +42,7 @@ const ManageEventsContainer = () => {
     const handleCloseDialog = () => {
         setIsDialogOpen(false)
         setSelectedEventId(null)
+        setIsNewDialogOpen(false)
     }
 
     // when a user clicks the trash icon
@@ -67,6 +74,19 @@ const ManageEventsContainer = () => {
     return (
         <div>
             <Box className="manage-event-container">
+                <>
+                <div className="grid-header">
+                    <Button className="new-btn" onClick={() => handleAddClick()}>+ Add</Button>
+                    <Typography className="grid-text">Img</Typography>
+                    <Typography className="grid-text">Event Name</Typography>
+                    <Typography className="grid-text">Category</Typography>
+                    <Typography className="grid-text">Tags</Typography>
+                    <Typography className="grid-text">Saturday</Typography>
+                    <Typography className="grid-text">Sunday</Typography>
+                    <Typography className="grid-text">Stall</Typography>
+                    <Typography className="grid-text">Description</Typography>   
+                </div>
+                </>
                 <Grid container>
                     {loading ? (
                         Array.from(new Array(4)).map((_, index) => (
@@ -103,7 +123,6 @@ const ManageEventsContainer = () => {
                                         <TextField variant="outlined" className="grid-text" size="small" name="eventdescription" value={event.eventdescription} InputProps={{readOnly: true}}></TextField>
                                     </Stack>
                                 </Grid>
-                                
                             )
                         })
                     )}
@@ -163,6 +182,8 @@ const ManageEventsContainer = () => {
                     </DialogActions>
                 </Dialog>
             </Box>
+
+            <NewEventDialog open={isNewDialogOpen} onClose={handleCloseDialog}></NewEventDialog>
         </div>
     )
 }
