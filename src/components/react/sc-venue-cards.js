@@ -210,6 +210,7 @@ const venueCards = () => {
                 </Box>
             )}
             {activeSection === 'parking' && (
+                <>
                 <Box id="parking">
                     <Typography className="subtitle">Parking</Typography>
                     <Stack className="info">
@@ -224,18 +225,21 @@ const venueCards = () => {
                         <Typography className="bold">On-site: </Typography>
                         <Typography className="paragraph">During peak times, additional overflow parking is available nearby. Shuttle services will be provided to transport guests to and from the main event area.</Typography>
                     </Stack>
-                    <Box id="parking-img">
-                    <img src={parkingImage} alt="Parking" style={{ width: '100%', height: 'auto' }} />
+                    <Box id="parking-img-container">
+                        <Box id="parking-img">
+                        </Box>
                     </Box>
                 </Box>
+                </>
             )}
             {activeSection === 'transport' && (
                 <Box id="transport">
                     <Typography className="subtitle">Transport</Typography>
                     <Typography className="paragraph">For convenient access to the light festival, many parking spots are available nearby. Alternatively, public transport is easy with frequent bus services and a nearby train station.</Typography>
                     <Typography className="paragraph">Follow signs for designated parking areas or plan your journey using public transport options for a hassle-free visit to this event.</Typography>
-                    <Box id="transport-img">
-                        <img src={transportImage} alt="Transport" style={{ width: '100%', height: 'auto' }} />
+                    <Box id="transport-img-container">
+                        <Box id="transport-img">
+                        </Box>
                     </Box>
                 </Box>
             )}

@@ -276,31 +276,6 @@ box-sizing: border-box;
         border: 2px solid #FFC600 !important;
     }
 }
-#parking-img, #transport-img {
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.2em;
-}
-#parking-img {
-    height: 12em;
-}
-#transport-img {
-    height: 20em;
-}
-
-#parking-img img, #transport-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.5s ease; 
-}
-
-#parking-img img:hover, #transport-img img:hover {
-    transform: scale(1.2); 
-}
 
 #festival-img {
     width: 100%;

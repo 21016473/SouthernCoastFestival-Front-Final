@@ -230,8 +230,10 @@ h2 {
     margin-bottom: 1em;
 
     #location, #map, #accessibility, #parking, #transport {
-        height: 65vh;
+        height: 67.5vh;
         width: 70vw;
+        position: relative;
+        display: grid;
 
         .subtitle, .bold, .paragraph {
             font-family: var(--base-font-family);
@@ -251,6 +253,7 @@ h2 {
         }
         .paragraph {
             margin: 0.5em 0;
+            font-size: 0.9em;
         }
         
         .info {
@@ -282,7 +285,6 @@ h2 {
         flex-direction: column;
 
         .subtitle {
-            padding-left: 0.5em;
             width: 50%;
         }
     }
@@ -297,6 +299,67 @@ h2 {
     }
     #accessibility {
         height: fit-content;
+    }
+    #parking {
+        grid-template-rows: auto auto auto auto 1fr;
+
+        #parking-img-container {
+            width: 100%;
+            object-fit: cover;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0.2em;
+            margin-top: 0.5em;
+            height: auto;
+            grid-row: 5;
+        
+            #parking-img {
+                background-image: url('../../static/images/parking.jpg');
+            }
+            
+            #parking-img {
+                background-position: center;
+                background-size: cover;
+                width: 100%;
+                height: 100%;
+                transition: transform 0.9s ease; 
+            }
+        }
+        
+        #parking-img:hover, #transport-img:hover {
+            transform: scale(1.2); 
+        }
+    }
+    #transport {
+        grid-template-rows: auto auto auto 1fr;
+
+        #transport-img-container {
+            width: 100%;
+            object-fit: cover;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0.2em;
+            margin-top: 0.5em;
+            height: auto;
+            grid-row: 4;
+
+            #transport-img {
+                background-image: url('../../static/images/transport.jpg');
+                background-position: center;
+                background-size: cover;
+                width: 100%;
+                height: 100%;
+                transition: transform 0.9s ease; 
+            }
+        }
+        
+        #transport-img:hover {
+            transform: scale(1.2); 
+        }
     }
 }
 
